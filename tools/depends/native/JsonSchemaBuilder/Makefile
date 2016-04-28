@@ -16,7 +16,7 @@ endif
 SOURCE=$(ROOT_DIR)/src
 
 CONFIGURE=./configure --prefix=$(PREFIX)
-APP=$(SOURCE)/JsonSchemaBuilder
+APP=$(PREFIX)/bin/JsonSchemaBuilder
 
 all: .installed-$(PLATFORM)
 
