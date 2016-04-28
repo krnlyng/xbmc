@@ -63,7 +63,11 @@ private:
 
   void Callback();
 
-  struct wl_listener m_listener;
+  struct Internal {
+      struct wl_listener m_listener;
+      Listener *m_self_ptr;
+  } m_internal;
+
   Delegate m_delegate;
 };
 }
@@ -535,13 +539,14 @@ xtw::XBMCWayland::PingSurface(struct wl_client *client,
 xtw::Listener::Listener(const Delegate &delegate) :
   m_delegate(delegate)
 {
-  m_listener.notify = Listener::MainCallback;
+  m_internal.m_listener.notify = Listener::MainCallback;
+  m_internal.m_self_ptr = this;
 }
 
 void
 xtw::Listener::MainCallback(struct wl_listener *listener, void *data)
 {
-  static_cast<Listener *>(data)->Callback();
+  container_of(listener, struct Listener::Internal, m_listener)->m_self_ptr->Callback();
 }
 
 void
@@ -553,7 +558,7 @@ xtw::Listener::Callback()
 void
 xtw::Listener::BindTo(struct wl_signal *s)
 {
-  wl_signal_add(s, &m_listener);
+  wl_signal_add(s, &m_internal.m_listener);
 }
 
 xtwc::Compositor::Compositor(struct weston_compositor *c) :
