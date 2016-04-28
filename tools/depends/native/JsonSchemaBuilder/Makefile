@@ -15,19 +15,17 @@ endif
 
 SOURCE=$(ROOT_DIR)/src
 
-CONFIGURE=./configure --prefix=$(PREFIX)
+CONFIGURE=$(SOURCE)/configure --prefix=$(PREFIX)
 APP=$(PREFIX)/bin/JsonSchemaBuilder
 
 all: $(APP)
 
-$(PLATFORM)/autogen.sh: $(SOURCE)/*
+$(SOURCE)/configure: $(SOURCE)/configure.ac
+	cd $(SOURCE) && ./autogen.sh
+
+$(PLATFORM)/config.log: $(SOURCE)/configure
 	rm -rf $(PLATFORM)
-	cp -a $(SOURCE) $(PLATFORM)
-
-$(PLATFORM)/configure: $(PLATFORM)/autogen.sh
-	cd $(PLATFORM) && ./autogen.sh
-
-$(PLATFORM)/config.log: $(PLATFORM)/configure
+	mkdir -p $(PLATFORM)
 	cd $(PLATFORM) && $(CONFIGURE)
 
 $(PLATFORM)/JsonSchemaBuilder: $(PLATFORM)/config.log

@@ -1,0 +1,5 @@
+/src/Makefile.in
+/src/aclocal.m4
+/src/*.cache
+/src/config/
+/src/configure
