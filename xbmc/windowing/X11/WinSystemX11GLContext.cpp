@@ -19,16 +19,19 @@
  */
 #include "system.h"
 
-#if defined(HAVE_X11) && defined(HAS_GL)
+#if defined(HAVE_X11) && (defined(HAS_GL) || defined(HAS_GLES))
 
+#ifdef HAS_GL
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#endif
 
 #include "WinSystemX11GLContext.h"
+#ifdef HAS_GL
 #include "GLContextGLX.h"
+#endif
 #include "GLContextEGL.h"
 #include "utils/log.h"
-#include "utils/StringUtils.h"
 #include "guilib/GraphicContext.h"
 #include "guilib/DispResource.h"
 #include "threads/SingleLock.h"
@@ -72,6 +75,8 @@ bool CWinSystemX11GLContext::IsExtSupported(const char* extension)
   return m_pGLContext->IsExtSupported(extension);
 }
 
+#ifdef HAS_GL
+
 GLXWindow CWinSystemX11GLContext::GetWindow() const
 {
   return static_cast<CGLContextGLX*>(m_pGLContext)->m_glxWindow;
@@ -81,6 +86,8 @@ GLXContext CWinSystemX11GLContext::GetGlxContext() const
 {
   return static_cast<CGLContextGLX*>(m_pGLContext)->m_glxContext;
 }
+
+#endif
 
 EGLDisplay CWinSystemX11GLContext::GetEGLDisplay() const
 {
@@ -175,6 +182,7 @@ bool CWinSystemX11GLContext::DestroyWindow()
 
 XVisualInfo* CWinSystemX11GLContext::GetVisual()
 {
+#ifdef HAS_GL
   GLint att[] =
   {
     GLX_RGBA,
@@ -187,6 +195,15 @@ XVisualInfo* CWinSystemX11GLContext::GetVisual()
     None
   };
   return glXChooseVisual(m_dpy, m_nScreen, att);
+#else
+  CLog::Log(LOGNOTICE, "CWinSystemX11GLContext::GetVisual() m_pGLContext:%p GetVisual", m_pGLContext);
+  if(!m_pGLContext)
+  {
+    CLog::Log(LOGNOTICE, "Create new CGLContextEGL at CWinSystemX11GLContext::CreateNewWindow, m_dpy=%p", m_dpy);
+    m_pGLContext = new CGLContextEGL(m_dpy);
+  }
+  return static_cast<CGLContextEGL*>(m_pGLContext)->GetVisual();
+#endif
 }
 
 bool CWinSystemX11GLContext::RefreshGLContext(bool force)
@@ -213,7 +230,11 @@ bool CWinSystemX11GLContext::RefreshGLContext(bool force)
   if (firstrun && (!ret || gpuvendor.compare(0, 5, "intel") != 0))
   {
     delete m_pGLContext;
+#ifdef HAS_GL
     m_pGLContext = new CGLContextGLX(m_dpy);
+#else
+    m_pGLContext = new CGLContextEGL(m_dpy);
+#endif
     ret = m_pGLContext->Refresh(force, m_nScreen, m_glWindow, m_newGlContext);
   }
   return ret;

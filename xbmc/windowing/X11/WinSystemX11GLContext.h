@@ -23,18 +23,28 @@
 #if defined(HAVE_X11)
 
 #include "WinSystemX11.h"
-#include "GL/glx.h"
 #include "EGL/egl.h"
-#include "rendering/gl/RenderSystemGL.h"
 #include "utils/GlobalsHandling.h"
 
+#ifdef HAS_GLES
+#include "rendering/gles/RenderSystemGLES.h"
+#else
+#include "rendering/gl/RenderSystemGL.h"
+#include "GL/glx.h"
+#endif
+
 class CGLContext;
+
+#ifdef HAS_GLES
+using CRenderSystemGL = CRenderSystemGLES;
+#endif
 
 class CWinSystemX11GLContext : public CWinSystemX11, public CRenderSystemGL
 {
 public:
   CWinSystemX11GLContext();
   virtual ~CWinSystemX11GLContext();
+
   bool CreateNewWindow(const std::string& name, bool fullScreen, RESOLUTION_INFO& res, PHANDLE_EVENT_FUNC userFunction) override;
   bool ResizeWindow(int newWidth, int newHeight, int newLeft, int newTop) override;
   bool SetFullScreen(bool fullScreen, RESOLUTION_INFO& res, bool blankOtherDisplays) override;
@@ -43,8 +53,11 @@ public:
 
   bool IsExtSupported(const char* extension) override;
 
+#ifdef HAS_GL
   GLXWindow GetWindow() const;
   GLXContext GetGlxContext() const;
+#endif
+
   EGLDisplay GetEGLDisplay() const;
   EGLSurface GetEGLSurface() const;
   EGLContext GetEGLContext() const;
@@ -61,7 +74,11 @@ protected:
   bool m_newGlContext;
 };
 
+#ifdef HAS_GL
+// TODO: why is this not enabled for GLES?
 XBMC_GLOBAL_REF(CWinSystemX11GLContext,g_Windowing);
+#endif
+
 #define g_Windowing XBMC_GLOBAL_USE(CWinSystemX11GLContext)
 
 #endif //HAVE_X11
