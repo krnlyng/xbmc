@@ -679,15 +679,15 @@ xtwc::Compositor::Seat()
 struct weston_surface *
 xtwc::Compositor::TopSurface()
 {
-  struct weston_surface *surface;
+  struct weston_view *view;
 
   /* The strange semantics of wl_container_of means that we can't
    * return its result directly because it needs to have an
    * instantiation of the type */
-  surface = wl_container_of(m_compositor->surface_list.prev,
-                            surface,
-                            link);
-  return surface;
+  view = wl_container_of(m_compositor->view_list.prev,
+                         view,
+                         link);
+  return view->surface;
 }
 
 void
