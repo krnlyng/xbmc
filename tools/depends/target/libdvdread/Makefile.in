@@ -1,6 +1,6 @@
 -include ../../Makefile.include
-include DVDREAD-VERSION
-DEPS = DVDREAD-VERSION Makefile
+include @srcdir@/DVDREAD-VERSION
+DEPS = @srcdir@/DVDREAD-VERSION Makefile
 
 # configuration settings
 config = --prefix=$(PREFIX) --disable-shared --enable-static --with-pic
@@ -9,7 +9,7 @@ EXTRA_CFLAGS = -D_XBMC
 ifeq ($(CROSS_COMPILING), yes)
   DEPS += ../../Makefile.include
 else
-  ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+  ROOT_DIR := @abs_builddir@
   PREFIX := $(ROOT_DIR)/dvdread-install
   AUTORECONF := autoreconf
 

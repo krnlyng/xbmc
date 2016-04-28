@@ -14,5 +14,5 @@ endif
 SRCS  = ProcessInfo.cpp $(OVERRIDES)
 LIB = Process.a
 
-include @abs_top_srcdir@/Makefile.include
+include @abs_top_builddir@/Makefile.include
 -include $(patsubst %.cpp,%.P,$(patsubst %.c,%.P,$(SRCS)))

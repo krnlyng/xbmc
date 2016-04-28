@@ -9,7 +9,7 @@ SWIG=@SWIG_EXE@
 LIB=python_binding.a
 all: $(LIB)
 
-include ../../../codegenerator.mk
+include $(TOPDIR)/codegenerator.mk
 
 SRCS =	AddonPythonInvoker.cpp \
 	CallbackHandler.cpp \
@@ -18,8 +18,7 @@ SRCS =	AddonPythonInvoker.cpp \
 	PythonInvoker.cpp \
 	XBPython.cpp \
 	swig.cpp \
-	PyContext.cpp \
-	$(GENERATED)
+	PyContext.cpp
 
 INCLUDES += @PYTHON_CPPFLAGS@
 .SECONDARY: $(GENERATED)

@@ -1,8 +1,7 @@
-ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 -include ../../Makefile.include
 
 ifeq ($(NATIVEPREFIX),)
-  PREFIX = $(ROOT_DIR)
+  PREFIX = @abs_builddir@
 else
   PREFIX = $(NATIVEPREFIX)
 endif
@@ -13,7 +12,7 @@ else
   PLATFORM = $(NATIVEPLATFORM)
 endif
 
-SOURCE=$(ROOT_DIR)/src
+SOURCE=@abs_srcdir@/src
 
 CONFIGURE=$(SOURCE)/configure --prefix=$(PREFIX)
 APP=$(PREFIX)/bin/JsonSchemaBuilder

@@ -9,13 +9,14 @@ SRCS = StubCursorManager.cpp \
        WestonTest.cpp \
        XBMCWayland.cpp
 
-WAYLAND_TEST_MODULE_PROTOCOL = protocol.xml
+WAYLAND_TEST_MODULE_PROTOCOL = @srcdir@/protocol.xml
 WAYLAND_TEST_MODULE_PROTOCOL_SRCS = xbmc_wayland_test_protocol.c
 WAYLAND_TEST_MODULE_PROTOCOL_GENERATED_SRCS = $(WAYLAND_TEST_MODULE_PROTOCOL_SRCS)
 WAYLAND_TEST_MODULE_PROTOCOL_GENERATED_SRCS += xbmc_wayland_test_server_protocol.h
 WAYLAND_TEST_MODULE_PROTOCOL_GENERATED_SRCS += xbmc_wayland_test_client_protocol.h
 WAYLAND_TEST_MODULE_SRCS = XBMCWaylandTestExtension.cpp
 
+INCLUDES += -I@builddir@
 INCLUDES += -I@abs_top_srcdir@/lib/gtest/include -I@WAYLAND_TEST_INCLUDES@
 LIB = test_wayland.a
 
@@ -25,7 +26,7 @@ endif
 
 CLEAN_FILES += $(WAYLAND_TEST_MODULE_PROTOCOL_GENERATED_SRCS) xbmc-wayland-test-extension.so
 
-include @abs_top_srcdir@/Makefile.include
+include @abs_top_builddir@/Makefile.include
 -include $(patsubst %.cpp,%.P,$(patsubst %.c,%.P,$(patsubst %.h,%.P,$(SRCS))))
 
 ifneq (,@WAYLAND_SCANNER@)

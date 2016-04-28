@@ -1,6 +1,6 @@
 ARCH=@ARCH@
 
-INCLUDES  = -I.
+INCLUDES  = -I@srcdir@
 INCLUDES += -I@abs_top_srcdir@/xbmc
 INCLUDES += -I@abs_top_srcdir@/xbmc/linux
 INCLUDES += -I@abs_top_srcdir@/xbmc/utils

@@ -2,11 +2,13 @@ ARCH=@ARCH@
 DEFINES+=
 CXXFLAGS=-fPIC -msse4.1
 LIBNAME=libsse4
-OBJS=CopyFrame.o
+SRCS=CopyFrame.cpp
 
 LIB_SHARED=@abs_top_srcdir@/system/$(LIBNAME)-$(ARCH).so
 
 all: $(LIB_SHARED)
+
+include @abs_top_builddir@/Makefile.include
 
 $(LIB_SHARED): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -shared -o $(LIB_SHARED) $(OBJS)
@@ -16,5 +18,3 @@ CLEAN_FILES = \
 
 DISTCLEAN_FILES= \
 	Makefile \
-
-include @abs_top_builddir@/Makefile.include

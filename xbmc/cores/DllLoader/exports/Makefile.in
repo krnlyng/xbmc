@@ -10,7 +10,7 @@ CLEAN_FILES = wrapper.def
 include @abs_top_builddir@/Makefile.include
 -include $(patsubst %.cpp,%.P,$(patsubst %.c,%.P,$(SRCS)))
 
-wrapper.o : wrapper.c
+wrapper.o : @srcdir@/wrapper.c
 	$(CC) $(CFLAGS) $(DEFINES) -c $(INCLUDES) $< -o $@
 
 exports_python_linux.o : exports_python_linux.cpp

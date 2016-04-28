@@ -1,14 +1,17 @@
 ARCH=@ARCH@
 
-OBJS +=libexif.o ExifParse.o IptcParse.o JpegParse.o
+SRCS=libexif.cpp ExifParse.cpp IptcParse.cpp JpegParse.cpp
 CFLAGS +=-D_LINUX -D_DLL -fPIC -O2
 CXXFLAGS +=-D_LINUX -D_DLL -fPIC -O2
 
 SYSDIR=@abs_top_srcdir@/system
 SO=libexif-$(ARCH).so
-SLIB=@abs_top_srcdir@/system/$(SO)
+SLIB=@abs_top_builddir@/system/$(SO)
+
+include @abs_top_builddir@/Makefile.include
 
 $(SLIB): $(OBJS)
+	@mkdir -p $(@D)
 ifeq ($(findstring osx,$(ARCH)), osx)
 	$(CXX) $(LDFLAGS) -Wl,-alias_list,@abs_top_srcdir@/xbmc/cores/DllLoader/exports/wrapper_mach_alias \
 		-bundle -undefined dynamic_lookup -read_only_relocs suppress -o $@ \
@@ -17,5 +20,3 @@ else
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -shared -o $@ $(OBJS) -Wl,--unresolved-symbols=ignore-all \
 		`cat @abs_top_srcdir@/xbmc/cores/DllLoader/exports/wrapper.def` @abs_top_srcdir@/xbmc/cores/DllLoader/exports/wrapper.o
 endif
-
-include @abs_top_builddir@/Makefile.include

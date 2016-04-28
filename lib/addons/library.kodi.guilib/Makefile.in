@@ -3,9 +3,9 @@ INCLUDES=-I. -I../../../xbmc/addons/kodi-addon-dev-kit/include/kodi -I../../../x
 DEFINES+=
 CXXFLAGS=-fPIC
 LIBNAME=libKODI_guilib
-OBJS=$(LIBNAME).o
+SRCS=$(LIBNAME).cpp
 
-LIB_INTERFACE=../../../xbmc/addons/kodi-addon-dev-kit/include/kodi/libKODI_guilib.h
+LIB_INTERFACE=@top_srcdir@/xbmc/addons/kodi-addon-dev-kit/include/kodi/libKODI_guilib.h
 
 ifeq ($(findstring osx,$(ARCH)), osx)
 LIB_SHARED=../../../addons/library.kodi.guilib/$(LIBNAME)-$(ARCH).dylib
@@ -19,7 +19,10 @@ LIB_VERSION_MIN := $(shell sed -n 's/.*KODI_GUILIB_MIN_API_VERSION\s*"\(.*\)"/\1
 
 all: $(LIB_SHARED) $(GENERATED_ADDON_GUILIB)
 
+include @abs_top_builddir@/Makefile.include
+
 $(LIB_SHARED): $(OBJS) $(LIB_INTERFACE)
+	@mkdir -p $(@D)
 ifeq ($(findstring osx,$(ARCH)), osx)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -dynamiclib -o $@ $(OBJS)
 else
@@ -34,5 +37,3 @@ CLEAN_FILES = \
 
 DISTCLEAN_FILES= \
 	Makefile \
-
-include @abs_top_builddir@/Makefile.include

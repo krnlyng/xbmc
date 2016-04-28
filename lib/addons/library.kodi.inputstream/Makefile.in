@@ -3,17 +3,20 @@ INCLUDES=-I. -I../../../xbmc/addons/include -I../../../xbmc
 DEFINES+=
 CXXFLAGS=-fPIC
 LIBNAME=libKODI_inputstream
-OBJS=$(LIBNAME).o
+SRCS=$(LIBNAME).cpp
 
 ifeq ($(findstring osx,$(ARCH)), osx)
-LIB_SHARED=../../../addons/library.kodi.inputstream/$(LIBNAME)-$(ARCH).dylib
+LIB_SHARED=@top_builddir@/addons/library.kodi.inputstream/$(LIBNAME)-$(ARCH).dylib
 else
-LIB_SHARED=../../../addons/library.kodi.inputstream/$(LIBNAME)-$(ARCH).so
+LIB_SHARED=@top_builddir@/addons/library.kodi.inputstream/$(LIBNAME)-$(ARCH).so
 endif
 
 all: $(LIB_SHARED)
 
+include @top_builddir@/Makefile.include
+
 $(LIB_SHARED): $(OBJS)
+	@mkdir -p $(@D)
 ifeq ($(findstring osx,$(ARCH)), osx)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -dynamiclib -o $@ $(OBJS)
 else
@@ -25,5 +28,3 @@ CLEAN_FILES = \
 
 DISTCLEAN_FILES= \
 	Makefile \
-
-include ../../../Makefile.include

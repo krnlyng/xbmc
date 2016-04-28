@@ -9,7 +9,7 @@ SRCS=	\
 
 LIB=xbmc-test.a
 
-INCLUDES += -I../../lib/gtest/include
+INCLUDES += -I@top_srcdir@/lib/gtest/include
 
-include ../../Makefile.include
+include @top_builddir@/Makefile.include
 -include $(patsubst %.cpp,%.P,$(patsubst %.c,%.P,$(SRCS)))

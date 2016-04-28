@@ -1,11 +1,11 @@
 -include ../../Makefile.include
-include DVDCSS-VERSION
-DEPS= DVDCSS-VERSION Makefile
+include @srcdir@/DVDCSS-VERSION
+DEPS= @srcdir@/DVDCSS-VERSION Makefile
 
 ifeq ($(CROSS_COMPILING), yes)
   DEPS += ../../Makefile.include
 else
-  ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+  ROOT_DIR := @abs_builddir@
   PREFIX := $(ROOT_DIR)/dvdcss-install
   AUTORECONF := autoreconf
 

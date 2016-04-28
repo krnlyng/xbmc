@@ -3,7 +3,7 @@ INCLUDES=-I. -I../../../xbmc/addons/kodi-addon-dev-kit/include/kodi -I../../../x
 DEFINES+=
 CXXFLAGS=-fPIC
 LIBNAME=libXBMC_codec
-OBJS=$(LIBNAME).o
+SRCS=$(LIBNAME).cpp
 
 ifeq ($(findstring osx,$(ARCH)), osx)
 LIB_SHARED=../../../addons/library.xbmc.codec/$(LIBNAME)-$(ARCH).dylib
@@ -12,6 +12,8 @@ LIB_SHARED=../../../addons/library.xbmc.codec/$(LIBNAME)-$(ARCH).so
 endif
 
 all: $(LIB_SHARED)
+
+include @abs_top_builddir@/Makefile.include
 
 $(LIB_SHARED): $(OBJS)
 	@mkdir -p $(@D)
@@ -26,5 +28,3 @@ CLEAN_FILES = \
 
 DISTCLEAN_FILES= \
 	Makefile \
-
-include @abs_top_builddir@/Makefile.include

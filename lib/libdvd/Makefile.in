@@ -4,21 +4,21 @@ CC=@CC@
 CXX=@CXX@
 
 ifeq (@CROSS_COMPILING@,yes)
-  DEPENDS_DIR = $(shell grep "^PREFIX=/" @abs_top_srcdir@/tools/depends/Makefile.include | sed 's/PREFIX=//g')
+  DEPENDS_DIR = $(shell grep "^PREFIX=/" @top_builddir@/tools/depends/Makefile.include | sed 's/PREFIX=//g')
   DVDNAV_A = $(DEPENDS_DIR)/lib/libdvdnav.a
   DVDREAD_A = $(DEPENDS_DIR)/lib/libdvdread.a
   DVDCSS_A = $(DEPENDS_DIR)/lib/libdvdcss.a
 else
-  DVDNAV_A = @abs_top_srcdir@/tools/depends/target/libdvdnav/dvdnav-install/lib/libdvdnav.a
-  DVDREAD_A = @abs_top_srcdir@/tools/depends/target/libdvdread/dvdread-install/lib/libdvdread.a
-  DVDCSS_A = @abs_top_srcdir@/tools/depends/target/libdvdcss/dvdcss-install/lib/libdvdcss.a
+  DVDNAV_A = @abs_top_builddir@/tools/depends/target/libdvdnav/dvdnav-install/lib/libdvdnav.a
+  DVDREAD_A = @abs_top_builddir@/tools/depends/target/libdvdread/dvdread-install/lib/libdvdread.a
+  DVDCSS_A = @abs_top_builddir@/tools/depends/target/libdvdcss/dvdcss-install/lib/libdvdcss.a
 endif
 
-SYSDIR = @abs_top_srcdir@/system/players/VideoPlayer
+SYSDIR = @abs_top_builddir@/system/players/VideoPlayer
 SOS = libdvdnav-$(ARCH).so
 
-WRAPPER = @abs_top_srcdir@/xbmc/cores/DllLoader/exports/wrapper.o
-WRAPPER_DEF = @abs_top_srcdir@/xbmc/cores/DllLoader/exports/wrapper.def
+WRAPPER = @abs_top_builddir@/xbmc/cores/DllLoader/exports/wrapper.o
+WRAPPER_DEF = @abs_top_builddir@/xbmc/cores/DllLoader/exports/wrapper.def
 WRAPPER_MACH_ALIAS = @abs_top_srcdir@/xbmc/cores/DllLoader/exports/wrapper_mach_alias
 
 ifeq ($(findstring osx,$(ARCH)),osx)
@@ -82,22 +82,23 @@ $(SYSDIR)/libdvdnav-$(ARCH).so: $(WRAPPER) $(WRAPPER_DEF) $(DVDNAV_A) $(DVDREAD_
 	[ $(BUILD_DVDCSS) -eq 1 ] && { cd libdvdcss && ar x $(DVDCSS_A); } || :
 	cd libdvdnav; ar x $(DVDNAV_A)
 	cd libdvdread; ar x $(DVDREAD_A)
+	@mkdir -p $(@D)
 	$(CC) -o $@ $(SO_LDFLAGS) -Wl,--soname,$@ libdvdread/*.o libdvdnav/*.o $(DVDCSS_OBJS) -lm -Wl,--unresolved-symbols=ignore-all \
                 `cat  $(WRAPPER_DEF)` $(WRAPPER)
 endif
 
 $(WRAPPER_DEF):
-	$(MAKE) -C @abs_top_srcdir@/xbmc/cores/DllLoader/exports wrapper.def
+	$(MAKE) -C @abs_top_builddir@/xbmc/cores/DllLoader/exports wrapper.def
 
 $(DVDNAV_A): $(DVDREAD_A)
-	$(MAKE) -C @abs_top_srcdir@/tools/depends/target/libdvdnav
+	$(MAKE) -C @abs_top_builddir@/tools/depends/target/libdvdnav
 
 $(DVDREAD_A): $(DVDREAD_DEPS)
-	$(MAKE) -C @abs_top_srcdir@/tools/depends/target/libdvdread
+	$(MAKE) -C @abs_top_builddir@/tools/depends/target/libdvdread
 
 ifeq ($(BUILD_DVDCSS),1)
 $(DVDCSS_A):
-	$(MAKE) -C @abs_top_srcdir@/tools/depends/target/libdvdcss
+	$(MAKE) -C @abs_top_builddir@/tools/depends/target/libdvdcss
 endif
 
 include @abs_top_builddir@/Makefile.include

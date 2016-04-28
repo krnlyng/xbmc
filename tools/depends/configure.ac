@@ -587,7 +587,7 @@ fi
 echo -e "use simulator:\t $use_simulator"
 
 if test "x$has_localeconv" == "xno" && test "$platform_os" == "android"; then
-  cp -vf target/android-libc-replacements/locale.h $prefix/$deps_dir/include/
+  cp -vf $srcdir/target/android-libc-replacements/locale.h $prefix/$deps_dir/include/
 fi
 
 cp -vf target/config.site $prefix/$deps_dir/share

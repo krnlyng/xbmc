@@ -3,7 +3,7 @@ INCLUDES=-I. -I../../../xbmc/addons/include -I../../../xbmc
 DEFINES+=
 CXXFLAGS=-fPIC
 LIBNAME=libKODI_peripheral
-OBJS=$(LIBNAME).o
+SRCS=$(LIBNAME).cpp
 
 ifeq ($(findstring osx,$(ARCH)), osx)
 LIB_SHARED=../../../addons/library.kodi.peripheral/$(LIBNAME)-$(ARCH).dylib
@@ -13,7 +13,10 @@ endif
 
 all: $(LIB_SHARED)
 
+include @top_builddir@/Makefile.include
+
 $(LIB_SHARED): $(OBJS)
+	@mkdir -p $(@D)
 ifeq ($(findstring osx,$(ARCH)), osx)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -dynamiclib -o $@ $(OBJS)
 else
@@ -25,5 +28,3 @@ CLEAN_FILES = \
 
 DISTCLEAN_FILES= \
 	Makefile \
-
-include ../../../Makefile.include
