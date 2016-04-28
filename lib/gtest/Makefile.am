@@ -273,7 +273,7 @@ test_fused_gtest_test_CPPFLAGS = -I"$(srcdir)/fused-src"
 # Build rules for putting fused Google Test files into the distribution
 # package. The user can also create those files by manually running
 # scripts/fuse_gtest_files.py.
-$(test_fused_gtest_test_SOURCES): fused-gtest
+$(FUSED_GTEST_SRC): fused-gtest
 
 fused-gtest: $(pkginclude_HEADERS) $(pkginclude_internal_HEADERS) \
              $(GTEST_SRC) src/gtest-all.cc src/gtest_main.cc \
