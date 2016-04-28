@@ -17,7 +17,6 @@ SOURCE=$(ROOT_DIR)/src
 
 CONFIGURE=./configure --prefix=$(PREFIX)
 APP=$(SOURCE)/JsonSchemaBuilder
-APPBIN=$(PREFIX)/bin/JsonSchemaBuilder
 
 all: .installed-$(PLATFORM)
 
