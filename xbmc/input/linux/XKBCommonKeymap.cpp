@@ -21,7 +21,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#include <boost/scope_exit.hpp>
+#include "utils/ScopeExit.hxx"
 
 #include <sys/mman.h>
 
@@ -85,11 +85,11 @@ CXKBKeymap::ReceiveXKBKeymapFromSharedMemory(IDllXKBCommon &xkbCommonLibrary, st
 
   /* In every exit path, the keymap string memory region must be
    * unmapped */
-  BOOST_SCOPE_EXIT((keymapString)(size))
+  AtScopeExit(keymapString, size)
   {
     munmap(const_cast<void *>(static_cast<const void *>(keymapString)),
                               size);
-  } BOOST_SCOPE_EXIT_END
+  };
 
   enum xkb_keymap_compile_flags flags =
     static_cast<enum xkb_keymap_compile_flags>(0);

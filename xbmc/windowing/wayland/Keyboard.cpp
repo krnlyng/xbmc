@@ -21,7 +21,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#include <boost/scope_exit.hpp>
+#include "utils/ScopeExit.hxx"
 
 #include <wayland-client.h>
 
@@ -151,10 +151,9 @@ void xw::Keyboard::HandleKeymap(uint32_t format,
                                 uint32_t size)
 {
   /* The file descriptor must always be closed */
-  BOOST_SCOPE_EXIT((fd))
-  {
+  AtScopeExit(fd) {
     close(fd);
-  } BOOST_SCOPE_EXIT_END
+  };
 
   /* We don't understand anything other than xkbv1. If we get some
    * other keyboard, then we can't process keyboard events reliably
@@ -171,11 +170,12 @@ void xw::Keyboard::HandleKeymap(uint32_t format,
                                                  fd,
                                                  size);
 
-  BOOST_SCOPE_EXIT((&m_xkbCommonLibrary)(&successfullyCreatedKeyboard)(keymap))
+  auto &xkbCommonLibrary = m_xkbCommonLibrary;
+  AtScopeExit(&xkbCommonLibrary, &successfullyCreatedKeyboard, keymap)
   {
     if (!successfullyCreatedKeyboard)
-      m_xkbCommonLibrary.xkb_keymap_unref(keymap);
-  } BOOST_SCOPE_EXIT_END
+      xkbCommonLibrary.xkb_keymap_unref(keymap);
+  };
 
   m_keymap.reset(new CXKBKeymap(m_xkbCommonLibrary,
                                 keymap));
