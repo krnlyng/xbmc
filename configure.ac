@@ -2234,15 +2234,32 @@ OUTPUT_FILES="Makefile \
     addons/skin.estuary/media/Makefile \
     addons/skin.estouchy/media/Makefile \
     xbmc/Makefile \
+    xbmc/addons/Makefile \
+    xbmc/addons/test/Makefile \
     xbmc/addons/binary/interfaces/Makefile \
+    xbmc/addons/binary/interfaces/api1/Addon/Makefile \
+    xbmc/addons/binary/interfaces/api1/AudioDSP/Makefile \
+    xbmc/addons/binary/interfaces/api1/AudioEngine/Makefile \
+    xbmc/addons/binary/interfaces/api1/Codec/Makefile \
+    xbmc/addons/binary/interfaces/api1/GUI/Makefile \
+    xbmc/addons/binary/interfaces/api1/InputStream/Makefile \
+    xbmc/addons/binary/interfaces/api1/Peripheral/Makefile \
+    xbmc/addons/binary/interfaces/api1/PVR/Makefile \
     xbmc/cdrip/Makefile \
+    xbmc/commons/Makefile \
+    xbmc/contrib/kissfft/Makefile \
     xbmc/cores/Makefile \
+    xbmc/cores/AudioEngine/Sinks/test/Makefile \
+    xbmc/cores/ExternalPlayer/Makefile \
+    xbmc/cores/VideoPlayer/DVDInputStreams/Makefile \
+    xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/Makefile \
     xbmc/cores/VideoPlayer/VideoRenderers/Makefile \
     xbmc/cores/VideoPlayer/VideoRenderers/HwDecRender/Makefile \
     xbmc/cores/VideoPlayer/Makefile \
     lib/libdvd/Makefile \
     xbmc/cores/DllLoader/Makefile \
     xbmc/cores/DllLoader/exports/Makefile \
+    xbmc/cores/DllLoader/exports/util/Makefile \
     xbmc/cores/VideoPlayer/DVDCodecs/Makefile \
     xbmc/cores/VideoPlayer/DVDCodecs/Audio/Makefile \
     xbmc/cores/VideoPlayer/DVDCodecs/Overlay/Makefile \
@@ -2254,14 +2271,87 @@ OUTPUT_FILES="Makefile \
     xbmc/cores/paplayer/Makefile \
     xbmc/cores/omxplayer/Makefile \
     xbmc/cores/playercorefactory/Makefile \
+    xbmc/dbwrappers/Makefile \
+    xbmc/dialogs/Makefile \
+    xbmc/events/Makefile \
+    xbmc/media/Makefile \
     xbmc/messaging/Makefile \
     xbmc/messaging/helpers/Makefile \
+    xbmc/music/dialogs/Makefile \
+    xbmc/music/infoscanner/Makefile \
+    xbmc/music/Makefile \
+    xbmc/music/tags/Makefile \
+    xbmc/music/tags/test/Makefile \
+    xbmc/music/windows/Makefile \
+    xbmc/epg/Makefile \
+    xbmc/games/controllers/Makefile \
+    xbmc/games/controllers/guicontrols/Makefile \
+    xbmc/games/controllers/windows/Makefile \
     xbmc/guilib/Makefile \
+    xbmc/input/Makefile \
+    xbmc/input/joysticks/Makefile \
+    xbmc/input/joysticks/generic/Makefile \
     xbmc/input/linux/Makefile \
+    xbmc/input/touch/generic/Makefile \
+    xbmc/input/touch/Makefile \
     xbmc/interfaces/Makefile \
     xbmc/interfaces/builtins/Makefile \
+    xbmc/interfaces/generic/Makefile \
+    xbmc/interfaces/info/Makefile \
+    xbmc/interfaces/json-rpc/Makefile \
+    xbmc/interfaces/legacy/Makefile \
+    xbmc/interfaces/legacy/wsgi/Makefile \
+    xbmc/listproviders/Makefile \
     xbmc/network/Makefile \
+    xbmc/network/dacp/Makefile \
+    xbmc/network/httprequesthandler/Makefile \
+    xbmc/network/linux/Makefile \
+    xbmc/network/mdns/Makefile \
+    xbmc/network/osx/Makefile \
+    xbmc/network/test/Makefile \
     xbmc/network/upnp/Makefile \
+    xbmc/network/websocket/Makefile \
+    xbmc/peripherals/dialogs/Makefile \
+    xbmc/peripherals/Makefile \
+    xbmc/pictures/Makefile \
+    xbmc/playlists/Makefile \
+    xbmc/profiles/dialogs/Makefile \
+    xbmc/profiles/Makefile \
+    xbmc/profiles/windows/Makefile \
+    xbmc/powermanagement/android/Makefile \
+    xbmc/powermanagement/linux/Makefile \
+    xbmc/powermanagement/Makefile \
+    xbmc/powermanagement/osx/Makefile \
+    xbmc/programs/Makefile \
+    xbmc/pvr/addons/Makefile \
+    xbmc/pvr/channels/Makefile \
+    xbmc/pvr/dialogs/Makefile \
+    xbmc/pvr/Makefile \
+    xbmc/pvr/recordings/Makefile \
+    xbmc/pvr/timers/Makefile \
+    xbmc/pvr/windows/Makefile \
+    xbmc/rendering/gles/Makefile \
+    xbmc/rendering/gl/Makefile \
+    xbmc/rendering/Makefile \
+    xbmc/settings/dialogs/Makefile \
+    xbmc/settings/lib/Makefile \
+    xbmc/settings/Makefile \
+    xbmc/settings/windows/Makefile \
+    xbmc/storage/android/Makefile \
+    xbmc/storage/linux/Makefile \
+    xbmc/storage/Makefile \
+    xbmc/storage/osx/Makefile \
+    xbmc/test/Makefile \
+    xbmc/threads/Makefile \
+    xbmc/threads/test/Makefile \
+    xbmc/video/dialogs/Makefile \
+    xbmc/video/jobs/Makefile \
+    xbmc/video/Makefile \
+    xbmc/video/test/Makefile \
+    xbmc/video/videosync/Makefile \
+    xbmc/video/windows/Makefile \
+    xbmc/view/Makefile \
+    xbmc/windows/Makefile \
     lib/libexif/Makefile \
     lib/libUPnP/Makefile \
     xbmc/DllPaths_generated.h \
@@ -2269,8 +2359,14 @@ OUTPUT_FILES="Makefile \
     xbmc/freebsd/Makefile \
     xbmc/linux/Makefile \
     xbmc/filesystem/Makefile \
+    xbmc/filesystem/MusicDatabaseDirectory/Makefile \
+    xbmc/filesystem/VideoDatabaseDirectory/Makefile \
+    xbmc/filesystem/test/Makefile \
     xbmc/windowing/Makefile \
     xbmc/windowing/egl/Makefile \
+    xbmc/windowing/X11/Makefile \
+    xbmc/windowing/android/Makefile \
+    xbmc/windowing/osx/Makefile \
     lib/addons/library.xbmc.addon/Makefile \
     lib/addons/library.kodi.adsp/Makefile \
     lib/addons/library.kodi.audioengine/Makefile \
@@ -2279,6 +2375,10 @@ OUTPUT_FILES="Makefile \
     lib/addons/library.kodi.peripheral/Makefile \
     lib/addons/library.xbmc.pvr/Makefile \
     lib/addons/library.kodi.inputstream/Makefile \
+    tools/depends/native/JsonSchemaBuilder/Makefile \
+    tools/depends/target/libdvdcss/Makefile \
+    tools/depends/target/libdvdnav/Makefile \
+    tools/depends/target/libdvdread/Makefile \
     tools/Linux/kodi.sh \
     tools/Linux/kodi-standalone.sh \
     tools/Linux/kodi-xsession.desktop \
@@ -2293,6 +2393,7 @@ OUTPUT_FILES="Makefile \
     xbmc/platform/android/loader/Makefile \
     xbmc/platform/android/jni/Makefile \
     xbmc/utils/Makefile \
+    xbmc/utils/test/Makefile \
     xbmc/platform/Makefile \
     tools/darwin/Configurations/App.xcconfig \
     tools/darwin/Configurations/Common.xcconfig \

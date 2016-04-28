@@ -344,18 +344,22 @@ lib/cpluff/stamp-h1
 #/tools/depends
 /tools/depends/native/*/*native/
 /tools/depends/native/JsonSchemaBuilder/bin/
+/tools/depends/native/JsonSchemaBuilder/Makefile
 /tools/depends/native/TexturePacker/bin/
 /tools/depends/target/ffmpeg/.ffmpeg-installed
 /tools/depends/target/ffmpeg/ffmpeg-*-*.tar.gz
 /tools/depends/target/ffmpeg/ffmpeg-*-*/
 /tools/depends/target/ffmpeg/ffmpeg-install/
 /tools/depends/target/ffmpeg/ffmpeg-release/
+/tools/depends/target/libdvdcss/Makefile
 /tools/depends/target/libdvdcss/dvdcss-install/
 /tools/depends/target/libdvdcss/libdvdcss-*.tar.gz
 /tools/depends/target/libdvdcss/native/
+/tools/depends/target/libdvdnav/Makefile
 /tools/depends/target/libdvdnav/dvdnav-install/
 /tools/depends/target/libdvdnav/libdvdnav-*.tar.gz
 /tools/depends/target/libdvdnav/native/
+/tools/depends/target/libdvdread/Makefile
 /tools/depends/target/libdvdread/dvdread-install/
 /tools/depends/target/libdvdread/libdvdread-*.tar.gz
 /tools/depends/target/libdvdread/native/
@@ -413,7 +417,15 @@ lib/cpluff/stamp-h1
 
 # /xbmc/addons/
 /xbmc/addons/Makefile
+/xbmc/addons/test/Makefile
 /xbmc/addons/binary/interfaces/Makefile
+/xbmc/addons/binary/interfaces/api1/Addon/Makefile
+/xbmc/addons/binary/interfaces/api1/AudioDSP/Makefile
+/xbmc/addons/binary/interfaces/api1/AudioEngine/Makefile
+/xbmc/addons/binary/interfaces/api1/Codec/Makefile
+/xbmc/addons/binary/interfaces/api1/GUI/Makefile
+/xbmc/addons/binary/interfaces/api1/InputStream/Makefile
+/xbmc/addons/binary/interfaces/api1/PVR/Makefile
 
 # /xbmc/platform/android
 /xbmc/platform/android/Makefile
@@ -424,29 +436,45 @@ lib/cpluff/stamp-h1
 # /xbmc/cdrip/
 /xbmc/cdrip/Makefile
 
+/xbmc/commons/Makefile
+/xbmc/contrib/kissfft/Makefile
+
 # /xbmc/cores/
 /xbmc/cores/AudioEngine/Makefile
+/xbmc/cores/AudioEngine/Sinks/test/Makefile
 /xbmc/cores/DllLoader/exports/build_wrapper.sh
 /xbmc/cores/DllLoader/exports/wrapper.def
 /xbmc/cores/DllLoader/Makefile
 /xbmc/cores/DllLoader/exports/Makefile
+/xbmc/cores/DllLoader/exports/util/Makefile
+/xbmc/cores/ExternalPlayer/Makefile
 /xbmc/cores/VideoPlayer/Makefile
 /xbmc/cores/VideoPlayer/DVDCodecs/Audio/Makefile
 /xbmc/cores/VideoPlayer/DVDCodecs/Makefile
 /xbmc/cores/VideoPlayer/DVDCodecs/Overlay/Makefile
 /xbmc/cores/VideoPlayer/DVDCodecs/Video/Makefile
 /xbmc/cores/VideoPlayer/DVDDemuxers/Makefile
+/xbmc/cores/VideoPlayer/DVDInputStreams/Makefile
 /xbmc/cores/VideoPlayer/DVDSubtitles/Makefile
 /xbmc/cores/VideoPlayer/Process/Makefile
 /xbmc/cores/VideoPlayer/VideoRenderers/HwDecRender/Makefile
+/xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/Makefile
 /xbmc/cores/omxplayer/Makefile
 /xbmc/cores/paplayer/Makefile
 /xbmc/cores/playercorefactory/Makefile
 /xbmc/cores/Makefile
 /xbmc/cores/VideoPlayer/VideoRenderers/Makefile
 
+/xbmc/dbwrappers/Makefile
+/xbmc/dialogs/Makefile
+/xbmc/epg/Makefile
+/xbmc/events/Makefile
+
 # /xbmc/filesystem/
 /xbmc/filesystem/Makefile
+xbmc/filesystem/MusicDatabaseDirectory/Makefile
+xbmc/filesystem/VideoDatabaseDirectory/Makefile
+xbmc/filesystem/test/Makefile
 
 # /xbmc/freebsd/
 /xbmc/freebsd/Makefile
@@ -466,12 +494,20 @@ lib/cpluff/stamp-h1
 /xbmc/guilib/Profile_FastCap
 
 # /xbmc/input
+/xbmc/input/Makefile
 /xbmc/input/linux/Makefile
+/xbmc/input/touch/Makefile
+/xbmc/input/touch/generic/Makefile
 
 # /xbmc/interfaces/
 /xbmc/interfaces/Makefile
 /xbmc/interfaces/builtins/Makefile
+/xbmc/interfaces/generic/Makefile
+/xbmc/interfaces/info/Makefile
+/xbmc/interfaces/json-rpc/Makefile
 /xbmc/interfaces/json-rpc/ServiceDescription.h
+/xbmc/interfaces/legacy/Makefile
+/xbmc/interfaces/legacy/wsgi/Makefile
 /xbmc/interfaces/python/Makefile
 /xbmc/interfaces/python/generated/
 /xbmc/interfaces/python/test/Makefile
@@ -479,6 +515,17 @@ lib/cpluff/stamp-h1
 # /xbmc/linux/
 /xbmc/linux/Makefile
 /xbmc/linux/sse4/Makefile
+
+/xbmc/listproviders/Makefile
+/xbmc/media/Makefile
+
+# /xbmc/music/
+/xbmc/music/Makefile
+/xbmc/music/dialogs/Makefile
+/xbmc/music/infoscanner/Makefile
+/xbmc/music/tags/Makefile
+/xbmc/music/tags/test/Makefile
+/xbmc/music/windows/Makefile
 
 # /xbmc/platform/posix
 /xbmc/platform/posix/Makefile
@@ -492,8 +539,15 @@ lib/cpluff/stamp-h1
 
 # /xbmc/network/
 /xbmc/network/Makefile
+/xbmc/network/dacp/Makefile
+/xbmc/network/httprequesthandler/Makefile
 /xbmc/network/httprequesthandler/python/Makefile
+/xbmc/network/linux/Makefile
+/xbmc/network/mdns/Makefile
+/xbmc/network/osx/Makefile
+/xbmc/network/test/Makefile
 /xbmc/network/upnp/Makefile
+/xbmc/network/websocket/Makefile
 
 # /xbmc/platform/darwin/osx/
 /xbmc/platform/darwin/osx/Info.plist
@@ -503,9 +557,51 @@ lib/cpluff/stamp-h1
 /xbmc/platform/darwin/osx/ios/IOS-Info.plist
 
 # /xbmc/peripherals/
+/xbmc/peripherals/Makefile
 /xbmc/peripherals/addons/Makefile
 /xbmc/peripherals/bus/Makefile
 /xbmc/peripherals/devices/Makefile
+/xbmc/peripherals/dialogs/Makefile
+
+/xbmc/pictures/Makefile
+/xbmc/playlists/Makefile
+/xbmc/profiles/dialogs/Makefile
+xbmc/profiles/Makefile
+xbmc/profiles/windows/Makefile
+xbmc/powermanagement/android/Makefile
+xbmc/powermanagement/linux/Makefile
+xbmc/powermanagement/Makefile
+xbmc/powermanagement/osx/Makefile
+xbmc/programs/Makefile
+xbmc/pvr/addons/Makefile
+xbmc/pvr/channels/Makefile
+xbmc/pvr/dialogs/Makefile
+xbmc/pvr/Makefile
+xbmc/pvr/recordings/Makefile
+xbmc/pvr/timers/Makefile
+xbmc/pvr/windows/Makefile
+xbmc/rendering/gles/Makefile
+xbmc/rendering/gl/Makefile
+xbmc/rendering/Makefile
+xbmc/settings/dialogs/Makefile
+xbmc/settings/lib/Makefile
+xbmc/settings/Makefile
+xbmc/settings/windows/Makefile
+xbmc/storage/android/Makefile
+xbmc/storage/linux/Makefile
+xbmc/storage/Makefile
+xbmc/storage/osx/Makefile
+/xbmc/test/Makefile
+xbmc/threads/Makefile
+xbmc/threads/test/Makefile
+xbmc/video/dialogs/Makefile
+xbmc/video/jobs/Makefile
+xbmc/video/Makefile
+xbmc/video/test/Makefile
+xbmc/video/videosync/Makefile
+xbmc/video/windows/Makefile
+xbmc/view/Makefile
+xbmc/windows/Makefile
 
 #/xbmc/utils
 /xbmc/utils/Makefile
@@ -522,6 +618,9 @@ lib/cpluff/stamp-h1
 /xbmc/windowing/tests/wayland/xbmc_wayland_test_protocol.c
 /xbmc/windowing/tests/wayland/xbmc_wayland_test_server_protocol.h
 /xbmc/windowing/tests/wayland/Makefile
+/xbmc/windowing/X11/Makefile
+/xbmc/windowing/android/Makefile
+/xbmc/windowing/osx/Makefile
 
 # /lib/libdvd/
 /lib/libdvd/bin

@@ -22,8 +22,8 @@ LIB=json-rpc.a
 
 GENERATED_JSON = ServiceDescription.h
 GENERATED_ADDON_JSON = ../../../addons/xbmc.json/addon.xml
-JSON_VERSION_SRC = schema/version.txt
-JSON_SRC =  $(JSON_VERSION_SRC) schema/license.txt schema/methods.json schema/types.json schema/notifications.json
+JSON_VERSION_SRC = @srcdir@/schema/version.txt
+JSON_SRC =  $(JSON_VERSION_SRC) @srcdir@/schema/license.txt @srcdir@/schema/methods.json @srcdir@/schema/types.json @srcdir@/schema/notifications.json
 
 all: $(GENERATED_JSON) $(GENERATED_ADDON_JSON) $(LIB)
 
