@@ -34,8 +34,10 @@
 
 namespace xt = xbmc::test;
 
+namespace
+{
 template<typename F>
-static void
+void
 SplitForEach(const char *p, char separator, F &&f)
 {
   while (true) {
@@ -53,7 +55,7 @@ SplitForEach(const char *p, char separator, F &&f)
   }
 }
 
-static std::list<std::string>
+std::list<std::string>
 Split(const char *p, char separator)
 {
   std::list<std::string> list;
@@ -65,8 +67,6 @@ Split(const char *p, char separator)
   return list;
 }
 
-namespace
-{
 std::string
 FindBinaryFromPATH(const std::string &binary)
 {
