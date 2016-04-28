@@ -20,16 +20,14 @@
 
 #include "ProcessInfo.h"
 
-// Override for platform ports
-#if !defined(PLATFORM_OVERRIDE)
+#ifdef TARGET_RASPBERRY_PI
+#include "linux/RBP.h"
+#endif
 
 CProcessInfo* CProcessInfo::CreateInstance()
 {
   return new CProcessInfo();
 }
-
-#endif
-
 
 // base class definitions
 CProcessInfo::CProcessInfo()
@@ -44,10 +42,19 @@ CProcessInfo::~CProcessInfo()
 
 EINTERLACEMETHOD CProcessInfo::GetFallbackDeintMethod()
 {
+#ifdef TARGET_RASPBERRY_PI
+  return VS_INTERLACEMETHOD_DEINTERLACE_HALF;
+#else
   return VS_INTERLACEMETHOD_DEINTERLACE;
+#endif
 }
 
 bool CProcessInfo::AllowDTSHDDecode()
 {
+#ifdef TARGET_RASPBERRY_PI
+  if (g_RBP.RasberryPiVersion() == 1)
+    return false;
+#else
   return true;
+#endif
 }
