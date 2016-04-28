@@ -19,9 +19,9 @@
  */
 #include <sstream>
 #include <stdexcept>
+#include <list>
 
-#include <boost/tokenizer.hpp>
-
+#include <string.h>
 #include <unistd.h>
 #include <signal.h>
 
@@ -34,6 +34,35 @@
 
 namespace xt = xbmc::test;
 
+template<typename F>
+static void
+SplitForEach(const char *p, char separator, F &&f)
+{
+  while (true) {
+    const char *q = strchr(p, separator);
+    if (q == nullptr) {
+      if (*p != 0)
+        f(p);
+      break;
+    }
+
+    if (q > p)
+      f(std::string(p, q).c_str());
+
+    p = q + 1;
+  }
+}
+
+static std::list<std::string>
+Split(const char *p, char separator)
+{
+  std::list<std::string> list;
+
+  SplitForEach(p, separator, [&list](const char *token){
+      list.push_back(token);
+    });
+}
+
 namespace
 {
 std::string
@@ -42,21 +71,10 @@ FindBinaryFromPATH(const std::string &binary)
   const char *pathEnvironmentCArray = getenv("PATH");
   if (!pathEnvironmentCArray)
     throw std::runtime_error("PATH is not set");
-
-  std::string pathEnvironment(pathEnvironmentCArray);
   
-  typedef boost::char_separator<char> CharSeparator;
-  typedef boost::tokenizer<CharSeparator> CharTokenizer;
-  
-  CharTokenizer paths(pathEnvironment,
-                      CharSeparator(":"));
-
-  for (CharTokenizer::iterator it = paths.begin();
-       it != paths.end();
-       ++it)
-  {
+  for (const auto &path : Split(pathEnvironmentCArray, ':')) {
     std::stringstream possibleBinaryLocationStream;
-    possibleBinaryLocationStream << *it
+    possibleBinaryLocationStream << path
                                  << "/"
                                  << binary;
     std::string possibleBinaryLocation(possibleBinaryLocationStream.str());
