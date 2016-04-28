@@ -19,8 +19,6 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/function.hpp>
-#include <boost/noncopyable.hpp>
 
 class IDllWaylandClient;
 class IDllWaylandEGL;
@@ -68,7 +66,7 @@ public:
 private:
 
   class Private;
-  boost::scoped_ptr<Private> priv;
+  std::unique_ptr<Private> priv;
 };
 }
 }

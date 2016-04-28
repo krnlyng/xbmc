@@ -19,15 +19,16 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/noncopyable.hpp>
 
-class TmpEnv :
-  boost::noncopyable
+class TmpEnv
 {
 public:
 
   TmpEnv(const char *env, const char *val);
   ~TmpEnv();
+
+  TmpEnv(const TmpEnv &) = delete;
+  TmpEnv &operator=(const TmpEnv &) = delete;
 
 private:
 

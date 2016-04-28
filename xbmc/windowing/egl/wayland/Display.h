@@ -19,9 +19,8 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
-#include <boost/scoped_ptr.hpp>
+#include <functional>
+#include <memory>
 
 class IDllWaylandClient;
 
@@ -34,13 +33,15 @@ namespace xbmc
 {
 namespace wayland
 {
-class Display :
-  boost::noncopyable
+class Display
 {
   public:
 
     Display(IDllWaylandClient &clientLibrary);
     ~Display();
+
+    Display(const Display &) = delete;
+    Display &operator=(const Display &) = delete;
 
     struct wl_display * GetWlDisplay();
     EGLNativeDisplayType* GetEGLNativeDisplay();
@@ -59,7 +60,7 @@ class WaylandDisplayListener
 {
 public:
 
-  typedef boost::function<void(Display &)> Handler;
+  typedef std::function<void(Display &)> Handler;
   
   void SetHandler(const Handler &);
   void DisplayAvailable(Display &);
@@ -69,7 +70,7 @@ private:
 
   Handler m_handler;
   
-  static boost::scoped_ptr<WaylandDisplayListener> m_instance;
+  static std::unique_ptr<WaylandDisplayListener> m_instance;
 };
 }
 }

@@ -21,8 +21,6 @@
  */
 #include <vector>
 
-#include <boost/noncopyable.hpp>
-
 #include <wayland-client.h>
 
 class IDllWaylandClient;
@@ -31,14 +29,16 @@ namespace xbmc
 {
 namespace wayland
 {
-struct Output :
-  boost::noncopyable
+struct Output
 {
 public:
 
   Output(IDllWaylandClient &,
          struct wl_output *);
   ~Output();
+
+  Output(const Output &) = delete;
+  Output &operator=(const Output &) = delete;
 
   struct ModeGeometry
   {

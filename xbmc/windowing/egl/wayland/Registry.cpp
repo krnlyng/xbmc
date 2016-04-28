@@ -44,7 +44,7 @@ xw::ExtraWaylandGlobals::NewGlobal(struct wl_registry *registry,
                                    const char *interface,
                                    uint32_t version)
 {
-  if (!m_handler.empty())
+  if (m_handler)
     m_handler(registry, name, interface, version);
 }
 
@@ -57,7 +57,7 @@ xw::ExtraWaylandGlobals::GetInstance()
   return *m_instance;
 }
 
-boost::scoped_ptr<xw::ExtraWaylandGlobals> xw::ExtraWaylandGlobals::m_instance;
+std::unique_ptr<xw::ExtraWaylandGlobals> xw::ExtraWaylandGlobals::m_instance;
 
 /* We inject an IWaylandRegistration here which is a virtual
  * class which a callback for the global objects

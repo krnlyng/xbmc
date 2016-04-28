@@ -19,8 +19,7 @@
  */
 #include <sstream>
 #include <stdexcept>
-
-#include <boost/array.hpp>
+#include <array>
 
 #include <signal.h>
 
@@ -35,13 +34,15 @@ namespace xt = xbmc::test;
 
 namespace
 {
-class TempFileWrapper :
-  boost::noncopyable
+class TempFileWrapper
 {
 public:
 
   TempFileWrapper(const westring &suffix);
   ~TempFileWrapper();
+
+  TempFileWrapper(const TempFileWrapper &) = delete;
+  TempFileWrapper &operator=(const TempFileWrapper &) = delete;
   
   void FetchDirectory(westring &directory);
   void FetchFilename(westring &name);
@@ -75,12 +76,14 @@ void TempFileWrapper::FetchFilename(westring &name)
   name = path.substr(directory.size());
 }
 
-class SavedTempSocket :
-  boost::noncopyable
+class SavedTempSocket
 {
 public:
 
   SavedTempSocket();
+
+  SavedTempSocket(const SavedTempSocket &) = delete;
+  SavedTempSocket &operator=(const SavedTempSocket &) = delete;
 
   const westring & FetchFilename();
   const westring & FetchDirectory();
@@ -111,14 +114,17 @@ SavedTempSocket::FetchDirectory()
 }
 
 template <typename Iterator>
-class SignalGuard :
-  boost::noncopyable
+class SignalGuard
 {
 public:
 
   SignalGuard(const Iterator &begin,
               const Iterator &end);
   ~SignalGuard();
+
+  SignalGuard(const SignalGuard &) = delete;
+  SignalGuard &operator=(const SignalGuard &) = delete;
+
 private:
 
   sigset_t mask;
@@ -150,7 +156,7 @@ SignalGuard<Iterator>::~SignalGuard()
     CLog::Log(LOGERROR, "Failed to unblock signals");
 }
 
-typedef boost::array<int, 4> SigArray;
+typedef std::array<int, 4> SigArray;
 SigArray BlockedSignals =
 {
   {

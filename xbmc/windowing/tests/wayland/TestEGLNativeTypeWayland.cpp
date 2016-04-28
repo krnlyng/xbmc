@@ -23,8 +23,7 @@
 
 #include <string>
 #include <vector>
-
-#include <boost/bind.hpp>
+#include <functional>
 
 #include <gtest/gtest.h>
 
@@ -125,12 +124,12 @@ private:
 ConnectedEGLNativeTypeWaylandWestonTest::ConnectedEGLNativeTypeWaylandWestonTest()
 {
   xw::WaylandDisplayListener &displayListener(xw::WaylandDisplayListener::GetInstance());
-  displayListener.SetHandler(boost::bind(&ConnectedEGLNativeTypeWaylandWestonTest::DisplayAvailable,
-                                         this, _1));
+  displayListener.SetHandler(std::bind(&ConnectedEGLNativeTypeWaylandWestonTest::DisplayAvailable,
+                                       this, std::placeholders::_1));
 
   xw::WaylandSurfaceListener &surfaceListener(xw::WaylandSurfaceListener::GetInstance());
-  surfaceListener.SetHandler(boost::bind(&ConnectedEGLNativeTypeWaylandWestonTest::SurfaceCreated,
-                                         this, _1));
+  surfaceListener.SetHandler(std::bind(&ConnectedEGLNativeTypeWaylandWestonTest::SurfaceCreated,
+                                       this, std::placeholders::_1));
 }
 
 ConnectedEGLNativeTypeWaylandWestonTest::~ConnectedEGLNativeTypeWaylandWestonTest()
@@ -207,14 +206,16 @@ protected:
               const char *interface,
               uint32_t version);
   
-  boost::scoped_ptr<xtw::XBMCWayland> m_xbmcWayland;
+  std::unique_ptr<xtw::XBMCWayland> m_xbmcWayland;
 };
 
 AssistedEGLNativeTypeWaylandTest::AssistedEGLNativeTypeWaylandTest()
 {
   xw::ExtraWaylandGlobals &extra(xw::ExtraWaylandGlobals::GetInstance());
-  extra.SetHandler(boost::bind(&AssistedEGLNativeTypeWaylandTest::Global,
-                               this, _1, _2, _3, _4));
+  extra.SetHandler(std::bind(&AssistedEGLNativeTypeWaylandTest::Global,
+                             this, std::placeholders::_1,
+                             std::placeholders::_2, std::placeholders::_3,
+                             std::placeholders::_4));
 }
 
 AssistedEGLNativeTypeWaylandTest::~AssistedEGLNativeTypeWaylandTest()

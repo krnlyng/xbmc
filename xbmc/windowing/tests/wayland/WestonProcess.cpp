@@ -20,7 +20,6 @@
 #include <sstream>
 #include <stdexcept>
 
-#include <boost/noncopyable.hpp>
 #include <boost/tokenizer.hpp>
 
 #include <unistd.h>

@@ -19,10 +19,9 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/function.hpp>
-#include <boost/noncopyable.hpp>
-
 #include "threads/Thread.h"
+
+#include <functional>
 
 namespace xbmc
 {
@@ -44,7 +43,7 @@ class PollThread :
 {
 public:
 
-  typedef boost::function<void()> Dispatch;
+  typedef std::function<void()> Dispatch;
 
   PollThread(const Dispatch &dispatch,
              const Dispatch &beforePoll,

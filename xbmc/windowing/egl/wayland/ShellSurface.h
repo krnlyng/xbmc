@@ -21,22 +21,22 @@
  */
 #include <wayland-client.h>
 
-#include <boost/noncopyable.hpp>
-
 class IDllWaylandClient;
 
 namespace xbmc
 {
 namespace wayland
 {
-class ShellSurface :
-  boost::noncopyable
+class ShellSurface
 {
 public:
 
   ShellSurface(IDllWaylandClient &clientLibrary,
                struct wl_shell_surface *shellSurface);
   ~ShellSurface();
+
+  ShellSurface(const ShellSurface &) = delete;
+  ShellSurface &operator=(const ShellSurface &) = delete;
 
   struct wl_shell_surface * GetWlShellSurface();
   void SetFullscreen(enum wl_shell_surface_fullscreen_method method,

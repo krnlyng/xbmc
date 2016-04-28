@@ -19,9 +19,7 @@
  */
 #include <algorithm>
 #include <vector>
-
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
+#include <functional>
 
 #include "utils/Stopwatch.h"
 
@@ -40,20 +38,20 @@ namespace xwe = xbmc::wayland::events;
  * strategy in place.  */
 void xwe::Loop::OnEvent(XBMC_Event &e)
 {
-  m_eventQueue.PushAction(boost::bind(&IEventListener::OnEvent,
-                                      &m_queueListener, e));
+  m_eventQueue.PushAction(std::bind(&IEventListener::OnEvent,
+                                    &m_queueListener, e));
 }
 
 void xwe::Loop::OnFocused()
 {
-  m_eventQueue.PushAction(boost::bind(&IEventListener::OnFocused,
-                                      &m_queueListener));
+  m_eventQueue.PushAction(std::bind(&IEventListener::OnFocused,
+                                    &m_queueListener));
 }
 
 void xwe::Loop::OnUnfocused()
 {
-  m_eventQueue.PushAction(boost::bind(&IEventListener::OnUnfocused,
-                                      &m_queueListener));
+  m_eventQueue.PushAction(std::bind(&IEventListener::OnUnfocused,
+                                    &m_queueListener));
 }
 
 xwe::Loop::Loop(IEventListener &queueListener,
@@ -110,9 +108,9 @@ void xwe::Loop::DispatchTimers()
    * trigger any remaining ones. If a timeout is triggered, then its
    * remaining time will return to the original timeout value */
   std::for_each(m_callbackQueue.begin(), m_callbackQueue.end (),
-                boost::bind(SubtractTimeoutAndTrigger,
-                            _1,
-                            static_cast<int>(elapsedMs)));
+                std::bind(SubtractTimeoutAndTrigger,
+                          std::placeholders::_1,
+                          static_cast<int>(elapsedMs)));
   /* Timeout times may have changed so that the timeouts are no longer
    * in order. Sort them so that they are. If they are unsorted,
    * the ordering of two timeouts, one which was added just before

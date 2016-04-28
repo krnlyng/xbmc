@@ -19,7 +19,6 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/scoped_ptr.hpp>
 
 #include "CursorManager.h"
 #include "Seat.h"
@@ -27,6 +26,8 @@
 #include "PointerProcessor.h"
 #include "Keyboard.h"
 #include "KeyboardProcessor.h"
+
+#include <memory>
 
 class IDllWaylandClient;
 class IDllXKBCommon;
@@ -75,8 +76,8 @@ private:
   PointerProcessor m_pointerProcessor;
   KeyboardProcessor m_keyboardProcessor;
 
-  boost::scoped_ptr<wayland::Seat> m_seat;
-  boost::scoped_ptr<wayland::Pointer> m_pointer;
-  boost::scoped_ptr<wayland::Keyboard> m_keyboard;
+  std::unique_ptr<wayland::Seat> m_seat;
+  std::unique_ptr<wayland::Pointer> m_pointer;
+  std::unique_ptr<wayland::Keyboard> m_keyboard;
 };
 }

@@ -18,13 +18,7 @@
  *
  */
 #include <algorithm>
-#include <sstream>
-#include <vector>
-
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
+#include <functional>
 
 #include <wayland-client.h>
 #include <xkbcommon/xkbcommon.h>
@@ -165,7 +159,7 @@ xbmc::KeyboardProcessor::Key(uint32_t serial,
   if (keyEventType == XBMC_KEYDOWN)
   {
     m_repeatCallback =
-      m_timeouts.RepeatAfterMs(boost::bind (
+      m_timeouts.RepeatAfterMs(std::bind (
                                  &KeyboardProcessor::RepeatCallback,
                                  this,
                                  key,

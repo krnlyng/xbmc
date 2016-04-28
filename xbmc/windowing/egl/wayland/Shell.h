@@ -19,7 +19,6 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/noncopyable.hpp>
 
 class IDllWaylandClient;
 
@@ -31,14 +30,16 @@ namespace xbmc
 {
 namespace wayland
 {
-class Shell :
-  boost::noncopyable
+class Shell
 {
 public:
 
   Shell(IDllWaylandClient &clientLibrary,
         struct wl_shell *shell);
   ~Shell();
+
+  Shell(const Shell &) = delete;
+  Shell &operator=(const Shell &) = delete;
 
   struct wl_shell * GetWlShell();
   struct wl_shell_surface * CreateShellSurface(struct wl_surface *);

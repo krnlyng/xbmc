@@ -21,8 +21,6 @@
  */
 #include "system.h"
 
-#include <boost/noncopyable.hpp>
-
 #ifdef UNICODE
   typedef std::wstring westring;
 #else
@@ -35,14 +33,16 @@ namespace xbmc
 {
 namespace test
 {
-class Process :
-  boost::noncopyable
+class Process
 {
 public:
 
   Process(const westring &base,
           const westring &socket);
   ~Process();
+
+  Process(const Process &) = delete;
+  Process &operator=(const Process &) = delete;
 
   void WaitForSignal(int signal, int timeout);
   void WaitForStatus(int status, int timeout);

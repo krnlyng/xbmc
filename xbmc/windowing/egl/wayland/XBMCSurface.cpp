@@ -19,11 +19,8 @@
  */
 #include <sstream>
 #include <stdexcept>
-
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
+#include <functional>
+#include <memory>
 
 #include <wayland-client.h>
 
@@ -58,7 +55,7 @@ public:
           uint32_t width,
           uint32_t height);
 
-  typedef boost::function<struct wl_region * ()> RegionFactory;
+  typedef std::function<struct wl_region * ()> RegionFactory;
 
   IDllWaylandClient &m_clientLibrary;
   IDllWaylandEGL &m_eglLibrary;
@@ -70,10 +67,10 @@ public:
    * a region later */ 
   RegionFactory m_regionFactory;
 
-  boost::scoped_ptr<Surface> m_surface;
-  boost::scoped_ptr<ShellSurface> m_shellSurface;
-  boost::scoped_ptr<OpenGLSurface> m_glSurface;
-  boost::scoped_ptr<Callback> m_frameCallback;
+  std::unique_ptr<Surface> m_surface;
+  std::unique_ptr<ShellSurface> m_shellSurface;
+  std::unique_ptr<OpenGLSurface> m_glSurface;
+  std::unique_ptr<Callback> m_frameCallback;
   
   void OnFrameCallback(uint32_t);
   void AddFrameCallback();
@@ -103,8 +100,8 @@ xw::XBMCSurface::Private::Private(IDllWaylandClient &clientLibrary,
   m_clientLibrary(clientLibrary),
   m_eglLibrary(eglLibrary),
   m_eventInjector(eventInjector),
-  m_regionFactory(boost::bind(&Compositor::CreateRegion,
-                              &compositor)),
+  m_regionFactory(std::bind(&Compositor::CreateRegion,
+                            &compositor)),
   m_surface(new xw::Surface(m_clientLibrary,
                             compositor.CreateSurface())),
   m_shellSurface(new xw::ShellSurface(m_clientLibrary,
@@ -160,7 +157,7 @@ xw::XBMCSurface::XBMCSurface(IDllWaylandClient &clientLibrary,
 }
 
 /* A defined destructor is required such that
- * boost::scoped_ptr<Private>::~scoped_ptr is generated here */
+ * std::unique_ptr<Private>::~unique_ptr is generated here */
 xw::XBMCSurface::~XBMCSurface()
 {
 }
@@ -212,7 +209,7 @@ void xw::XBMCSurface::Private::AddFrameCallback()
 {
   m_frameCallback.reset(new xw::Callback(m_clientLibrary,
                                          m_surface->CreateFrameCallback(),
-                                         boost::bind(&Private::OnFrameCallback,
-                                                     this,
-                                                     _1)));
+                                         std::bind(&Private::OnFrameCallback,
+                                                   this,
+                                                   std::placeholders::_1)));
 }

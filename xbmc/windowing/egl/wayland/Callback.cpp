@@ -19,9 +19,6 @@
  */
 #include <wayland-client.h>
 
-#include <boost/function.hpp>
-#include <boost/bind.hpp>
-
 #include "windowing/DllWaylandClient.h"
 #include "windowing/WaylandProtocol.h"
 #include "Callback.h"

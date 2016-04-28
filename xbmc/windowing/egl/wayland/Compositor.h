@@ -19,8 +19,6 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/noncopyable.hpp>
-
 struct wl_compositor;
 struct wl_surface;
 struct wl_region;
@@ -31,14 +29,16 @@ namespace xbmc
 {
 namespace wayland
 {
-class Compositor :
-  boost::noncopyable
+class Compositor
 {
 public:
 
   Compositor(IDllWaylandClient &clientLibrary,
              struct wl_compositor *compositor);
   ~Compositor();
+
+  Compositor(const Compositor &) = delete;
+  Compositor &operator=(const Compositor &) = delete;
 
   struct wl_compositor * GetWlCompositor();
   

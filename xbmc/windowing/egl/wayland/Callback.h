@@ -19,8 +19,7 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
+#include <functional>
 
 #include <wayland-client.h>
 
@@ -35,17 +34,19 @@ namespace wayland
  * in time. A custom closure can be provided as func to be called
  * whenever this callback is fired
  */
-class Callback :
-  boost::noncopyable
+class Callback
 {
 public:
 
-  typedef boost::function<void(uint32_t)> Func;
+  typedef std::function<void(uint32_t)> Func;
 
   Callback(IDllWaylandClient &clientLibrary,
            struct wl_callback *callback,
            const Func &func);
   ~Callback();
+
+  Callback(const Callback &) = delete;
+  Callback &operator=(const Callback &) = delete;
 
   struct wl_callback * GetWlCallback();
 

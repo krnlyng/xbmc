@@ -19,7 +19,6 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/scoped_ptr.hpp>
 
 #include <gtest/gtest.h>
 
@@ -46,5 +45,5 @@ public:
 private:
 
   class Private;
-  boost::scoped_ptr<Private> priv;
+  std::unique_ptr<Private> priv;
 };

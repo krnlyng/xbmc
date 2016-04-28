@@ -19,8 +19,7 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/function.hpp>
-#include <boost/noncopyable.hpp>
+#include <functional>
 
 namespace xbmc
 {
@@ -28,14 +27,16 @@ namespace wayland
 {
 namespace events
 {
-class IEventQueueStrategy :
-  boost::noncopyable
+class IEventQueueStrategy
 {
 public:
-
+  IEventQueueStrategy() = default;
   virtual ~IEventQueueStrategy() {}
 
-  typedef boost::function<void()> Action;
+  IEventQueueStrategy(const IEventQueueStrategy &) = delete;
+  IEventQueueStrategy &operator=(const IEventQueueStrategy &) = delete;
+
+  typedef std::function<void()> Action;
 
   virtual void PushAction(const Action &event) = 0;
   virtual void DispatchEventsFromMain() = 0;

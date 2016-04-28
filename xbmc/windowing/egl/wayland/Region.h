@@ -19,7 +19,6 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/noncopyable.hpp>
 
 class IDllWaylandClient;
 
@@ -29,14 +28,16 @@ namespace xbmc
 {
 namespace wayland
 {
-class Region :
-  boost::noncopyable
+class Region
 {
 public:
 
   Region(IDllWaylandClient &clientLibrary,
          struct wl_region *);
   ~Region();
+
+  Region(const Region &) = delete;
+  Region &operator=(const Region &) = delete;
   
   struct wl_region * GetWlRegion();
 

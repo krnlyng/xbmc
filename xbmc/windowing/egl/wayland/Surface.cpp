@@ -25,7 +25,7 @@
 
 namespace xw = xbmc::wayland;
 
-boost::scoped_ptr<xw::WaylandSurfaceListener> xw::WaylandSurfaceListener::m_instance;
+std::unique_ptr<xw::WaylandSurfaceListener> xw::WaylandSurfaceListener::m_instance;
 
 xw::WaylandSurfaceListener &
 xw::WaylandSurfaceListener::GetInstance()
@@ -45,7 +45,7 @@ xw::WaylandSurfaceListener::SetHandler(const Handler &handler)
 void
 xw::WaylandSurfaceListener::SurfaceCreated(xw::Surface &surface)
 {
-  if (!m_handler.empty())
+  if (m_handler)
     m_handler(surface);
 }
 

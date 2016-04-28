@@ -18,10 +18,7 @@
  *
  */
 #include <algorithm>
-
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include <boost/noncopyable.hpp>
+#include <functional>
 
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
@@ -78,12 +75,12 @@ xw11::EventQueueStrategy::EventQueueStrategy(IDllWaylandClient &clientLibrary,
                                              struct wl_display *display) :
   m_clientLibrary(clientLibrary),
   m_display(display),
-  m_thread(boost::bind(ReadAndDispatch,
-                       boost::ref(m_clientLibrary),
-                       m_display),
-           boost::bind(DispatchPendingEvents,
-                       boost::ref(m_clientLibrary),
-                       m_display),
+  m_thread(std::bind(ReadAndDispatch,
+                     std::ref(m_clientLibrary),
+                     m_display),
+           std::bind(DispatchPendingEvents,
+                     std::ref(m_clientLibrary),
+                     m_display),
            m_clientLibrary.wl_display_get_fd(m_display))
 {
 }

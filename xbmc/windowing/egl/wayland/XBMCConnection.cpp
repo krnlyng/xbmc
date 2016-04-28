@@ -21,12 +21,8 @@
 #include <sstream>
 #include <stdexcept>
 #include <queue>
-
-#include <boost/array.hpp>
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
+#include <functional>
+#include <cstring>
 
 #include <wayland-client.h>
 
@@ -89,7 +85,7 @@ class GlobalInterface :
 {
 public:
 
-  typedef boost::function<void(uint32_t version)> AvailabilityHook;
+  typedef std::function<void(uint32_t version)> AvailabilityHook;
 
 protected:
 
@@ -167,8 +163,8 @@ class StoredGlobalInterface :
 {
 public:
 
-  typedef boost::function<Implementation * (WaylandImplementation *)> Factory;
-  typedef std::vector<boost::shared_ptr<Implementation> > Implementations;
+  typedef std::function<Implementation * (WaylandImplementation *)> Factory;
+  typedef std::vector<std::shared_ptr<Implementation> > Implementations;
   
   /* Factory must be capable of returning a new Implementation *
    * corresponding to a WaylandImplementation *. This is usually
@@ -262,7 +258,7 @@ private:
   /* Synchronization logic - these variables should not be touched
    * outside the scope of WaitForSynchronize() */
   bool synchronized;
-  boost::scoped_ptr<Callback> synchronizeCallback;
+  std::unique_ptr<Callback> synchronizeCallback;
   
   bool OnGlobalInterfaceAvailable(uint32_t name,
                                   const char *interface,
@@ -270,15 +266,15 @@ private:
 
   void InjectSeat();
 
-  boost::scoped_ptr<wayland::Display> m_display;
-  boost::scoped_ptr<wayland::Registry> m_registry;
+  std::unique_ptr<wayland::Display> m_display;
+  std::unique_ptr<wayland::Registry> m_registry;
   
   StoredGlobalInterface<wayland::Compositor, struct wl_compositor> m_compositor;
   StoredGlobalInterface<wayland::Shell, struct wl_shell> m_shell;
   WaylandGlobalObject<struct wl_seat> m_seat;
   StoredGlobalInterface<wayland::Output, struct wl_output> m_outputs;
   
-  boost::scoped_ptr<events::IEventQueueStrategy> m_eventQueue;
+  std::unique_ptr<events::IEventQueueStrategy> m_eventQueue;
 };
 }
 }
@@ -294,7 +290,7 @@ xw::GlobalInterface::OnObjectAvailable(uint32_t name,
   m_availableNames.push(name);
   m_version = version;
   
-  if (!m_hook.empty())
+  if (m_hook)
     m_hook(m_version);
 }
 
@@ -356,7 +352,7 @@ xw::StoredGlobalInterface<Implementation, WaylandImplementation>::Get(Registry &
   
   while (proxy)
   {
-    boost::shared_ptr<Implementation> instance(m_factory(proxy));
+    std::shared_ptr<Implementation> instance(m_factory(proxy));
     m_implementations.push_back(instance);
     proxy = m_waylandObject.FetchPending(registry);
   }
@@ -518,16 +514,17 @@ xw::XBMCConnection::Private::Private(IDllWaylandClient &clientLibrary,
   m_registry(new xw::Registry(clientLibrary,
                               m_display->GetWlDisplay(),
                               *this)),
-  m_compositor(boost::bind(CreateCompositor, _1, &m_clientLibrary),
+  m_compositor(std::bind(CreateCompositor, std::placeholders::_1,
+                         &m_clientLibrary),
                RequestedCompositorVersion,
                clientLibrary.Get_wl_compositor_interface()),
-  m_shell(boost::bind(CreateShell, _1, &m_clientLibrary),
+  m_shell(std::bind(CreateShell, std::placeholders::_1, &m_clientLibrary),
           RequestedShellVersion,
           clientLibrary.Get_wl_shell_interface()),
   m_seat(RequestedSeatVersion,
          clientLibrary.Get_wl_seat_interface(),
-         boost::bind(&Private::InjectSeat, this)),
-  m_outputs(boost::bind(CreateOutput, _1, &m_clientLibrary),
+         std::bind(&Private::InjectSeat, this)),
+  m_outputs(std::bind(CreateOutput, std::placeholders::_1, &m_clientLibrary),
             RequestedOutputVersion,
             clientLibrary.Get_wl_output_interface()),
   m_eventQueue(EventQueueForClientVersion(m_clientLibrary,
@@ -569,7 +566,7 @@ xw::XBMCConnection::XBMCConnection(IDllWaylandClient &clientLibrary,
 }
 
 /* A defined destructor is required such that
- * boost::scoped_ptr<Private>::~scoped_ptr is generated here */
+ * std::unique_ptr<Private>::~unique_ptr is generated here */
 xw::XBMCConnection::~XBMCConnection()
 {
 }
@@ -619,9 +616,9 @@ xw::XBMCConnection::Private::OnGlobalInterfaceAvailable(uint32_t name,
                                                         const char *interface,
                                                         uint32_t version)
 {
-  /* A boost::array is effectively immutable so we can leave out
+  /* A std::array is effectively immutable so we can leave out
    * const here */
-  typedef boost::array<RemoteGlobalInterface::Constructor, 4> ConstructorArray;
+  typedef std::array<RemoteGlobalInterface::Constructor, 4> ConstructorArray;
 
   
   /* Not static, as the pointers here may change in cases where
@@ -657,8 +654,8 @@ xw::XBMCConnection::Private::OnGlobalInterfaceAvailable(uint32_t name,
 
 void xw::XBMCConnection::Private::WaitForSynchronize()
 {
-  boost::function<void(uint32_t)> func(boost::bind(&Private::Synchronize,
-                                                   this));
+  std::function<void(uint32_t)> func(std::bind(&Private::Synchronize,
+                                               this));
   
   synchronized = false;
   synchronizeCallback.reset(new xw::Callback(m_clientLibrary,

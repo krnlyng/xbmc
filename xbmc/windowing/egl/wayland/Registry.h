@@ -20,10 +20,8 @@
  *
  */
 #include <string>
-
-#include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
-#include <boost/scoped_ptr.hpp>
+#include <memory>
+#include <functional>
 
 #include <wayland-client.h>
 
@@ -42,10 +40,10 @@ class ExtraWaylandGlobals
 {
 public:
 
-  typedef boost::function<void(struct wl_registry *,
-                               uint32_t,
-                               const char *,
-                               uint32_t)> GlobalHandler;
+  typedef std::function<void(struct wl_registry *,
+                             uint32_t,
+                             const char *,
+                             uint32_t)> GlobalHandler;
   
   void SetHandler(const GlobalHandler &);
   void NewGlobal(struct wl_registry *,
@@ -58,7 +56,7 @@ private:
 
   GlobalHandler m_handler;
   
-  static boost::scoped_ptr<ExtraWaylandGlobals> m_instance;
+  static std::unique_ptr<ExtraWaylandGlobals> m_instance;
 };
 
 class IWaylandRegistration
@@ -72,8 +70,7 @@ public:
                                           uint32_t) = 0;
 };
 
-class Registry :
-  boost::noncopyable
+class Registry
 {
 public:
 
@@ -81,6 +78,9 @@ public:
            struct wl_display   *display,
            IWaylandRegistration &registration);
   ~Registry();
+
+  Registry(const Registry &) = delete;
+  Registry &operator=(const Registry &) = delete;
 
   struct wl_registry * GetWlRegistry();
   

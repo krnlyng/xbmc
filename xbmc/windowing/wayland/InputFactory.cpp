@@ -17,10 +17,6 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include <boost/scoped_ptr.hpp>
-
 #include "EventListener.h"
 #include "Keyboard.h"
 #include "Pointer.h"

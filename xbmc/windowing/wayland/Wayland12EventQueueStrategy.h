@@ -21,8 +21,6 @@
  */
 #include <queue>
 
-#include <boost/noncopyable.hpp>
-
 #include "EventQueueStrategy.h"
 #include "PollThread.h"
 

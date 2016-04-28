@@ -19,8 +19,8 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/function.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
+#include <functional>
 
 namespace xbmc
 {
@@ -34,8 +34,8 @@ class ITimeoutManager
 {
 public:
   
-  typedef boost::function<void()> Callback;
-  typedef boost::shared_ptr <Callback> CallbackPtr;
+  typedef std::function<void()> Callback;
+  typedef std::shared_ptr <Callback> CallbackPtr;
   
   virtual ~ITimeoutManager() {}
   virtual CallbackPtr RepeatAfterMs (const Callback &callback,

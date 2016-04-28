@@ -20,10 +20,8 @@
 #define WL_EGL_PLATFORM
 
 #include <stdexcept>
-
-#include <boost/bind.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
+#include <functional>
 
 #include <gtest/gtest.h>
 
@@ -125,23 +123,23 @@ protected:
   StubCursorManager cursors;
   StubEventListener listener;
 
-  boost::shared_ptr<struct xkb_context> xkbContext;
-  boost::scoped_ptr<CXKBKeymap> keymap;
+  std::shared_ptr<struct xkb_context> xkbContext;
+  std::unique_ptr<CXKBKeymap> keymap;
 
-  boost::scoped_ptr<xw::Display> display;
-  boost::scoped_ptr<xwe::IEventQueueStrategy> queue;
-  boost::scoped_ptr<xw::Registry> registry;
+  std::unique_ptr<xw::Display> display;
+  std::unique_ptr<xwe::IEventQueueStrategy> queue;
+  std::unique_ptr<xw::Registry> registry;
 
-  boost::scoped_ptr<xwe::Loop> loop;
-  boost::scoped_ptr<xbmc::InputFactory> input;
+  std::unique_ptr<xwe::Loop> loop;
+  std::unique_ptr<xbmc::InputFactory> input;
 
-  boost::scoped_ptr<xw::Compositor> compositor;
-  boost::scoped_ptr<xw::Shell> shell;
-  boost::scoped_ptr<xtw::XBMCWayland> xbmcWayland;
+  std::unique_ptr<xw::Compositor> compositor;
+  std::unique_ptr<xw::Shell> shell;
+  std::unique_ptr<xtw::XBMCWayland> xbmcWayland;
 
-  boost::scoped_ptr<xw::Surface> surface;
-  boost::scoped_ptr<xw::ShellSurface> shellSurface;
-  boost::scoped_ptr<xw::OpenGLSurface> openGLSurface;
+  std::unique_ptr<xw::Surface> surface;
+  std::unique_ptr<xw::ShellSurface> shellSurface;
+  std::unique_ptr<xw::OpenGLSurface> openGLSurface;
 
   virtual xwe::IEventQueueStrategy * CreateEventQueue() = 0;
 
@@ -158,7 +156,7 @@ private:
 
   bool synchronized;
   void Synchronize();
-  boost::scoped_ptr<xw::Callback> syncCallback;
+  std::unique_ptr<xw::Callback> syncCallback;
   
   TmpEnv m_waylandDisplayEnv;
 };
@@ -178,8 +176,8 @@ void InputEventsWestonTest::SetUp()
   xkbCommonLibrary.Load();
   
   xkbContext.reset(CXKBKeymap::CreateXKBContext(xkbCommonLibrary),
-                   boost::bind(&IDllXKBCommon::xkb_context_unref,
-                               &xkbCommonLibrary, _1));
+                   std::bind(&IDllXKBCommon::xkb_context_unref,
+                             &xkbCommonLibrary, std::placeholders::_1));
   keymap.reset(new CXKBKeymap(
                  xkbCommonLibrary, 
                  CXKBKeymap::CreateXKBKeymapFromNames(xkbCommonLibrary,
@@ -285,8 +283,8 @@ void InputEventsWestonTest::WaitForSynchronize()
   synchronized = false;
   syncCallback.reset(new xw::Callback(clientLibrary,
                                       display->Sync(),
-                                      boost::bind(&InputEventsWestonTest::Synchronize,
-                                                  this)));
+                                      std::bind(&InputEventsWestonTest::Synchronize,
+                                                this)));
   
   while (!synchronized)
     loop->Dispatch();

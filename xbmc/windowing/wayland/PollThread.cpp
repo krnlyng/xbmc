@@ -20,10 +20,6 @@
 #include <sstream>
 #include <stdexcept>
 
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include <boost/noncopyable.hpp>
-
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
 #endif
@@ -31,6 +27,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/poll.h>
+#include <string.h>
 
 #include "utils/log.h"
 

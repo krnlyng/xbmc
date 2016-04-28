@@ -19,8 +19,6 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/noncopyable.hpp>
-
 #include <wayland-client.h>
 
 class IDllWaylandClient;
@@ -42,8 +40,7 @@ public:
   virtual void RemoveKeyboard() = 0;
 };
 
-class Seat :
-  public boost::noncopyable
+class Seat
 {
 public:
 
@@ -51,6 +48,9 @@ public:
        struct wl_seat *,
        IInputReceiver &);
   ~Seat();
+
+  Seat(const Seat &) = delete;
+  Seat &operator=(const Seat &) = delete;
 
   struct wl_seat * GetWlSeat();
 

@@ -21,8 +21,6 @@
 #include <iostream>
 #include <stdexcept>
 
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
 #include <boost/scope_exit.hpp>
 
 #include <wayland-client.h>
@@ -53,6 +51,11 @@ void DestroyXKBCommonContext(struct xkb_context *context,
 }
 }
 
+void
+xw::Keyboard::XkbContextDeleter::operator()(struct xkb_context *c)
+{
+}
+
 xw::Keyboard::Keyboard(IDllWaylandClient &clientLibrary,
                        IDllXKBCommon &xkbCommonLibrary,
                        struct wl_keyboard *keyboard,
@@ -60,9 +63,7 @@ xw::Keyboard::Keyboard(IDllWaylandClient &clientLibrary,
   m_clientLibrary(clientLibrary),
   m_xkbCommonLibrary(xkbCommonLibrary),
   m_xkbCommonContext(CXKBKeymap::CreateXKBContext(m_xkbCommonLibrary),
-                     boost::bind(DestroyXKBCommonContext,
-                                 _1,
-                                 boost::ref(m_xkbCommonLibrary))),
+                     XkbContextDeleter(xkbCommonLibrary)),
   m_keyboard(keyboard),
   m_reciever(receiver)
 {

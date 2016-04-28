@@ -21,8 +21,6 @@
 
 #if defined (HAVE_WAYLAND)
 
-#include <boost/scoped_ptr.hpp>
-
 #include "Application.h"
 #include "xbmc/windowing/WindowingFactory.h"
 #include "WinEventsWayland.h"
@@ -30,6 +28,8 @@
 #include "wayland/EventListener.h"
 #include "wayland/InputFactory.h"
 #include "wayland/EventLoop.h"
+
+#include <memory>
 
 namespace xwe = xbmc::wayland::events;
 
@@ -46,8 +46,8 @@ public:
 };
 
 XBMCListener g_listener;
-boost::scoped_ptr <xbmc::InputFactory> g_inputInstance;
-boost::scoped_ptr <xwe::Loop> g_eventLoop;
+std::unique_ptr<xbmc::InputFactory> g_inputInstance;
+std::unique_ptr<xwe::Loop> g_eventLoop;
 }
 
 void XBMCListener::OnEvent(XBMC_Event &e)

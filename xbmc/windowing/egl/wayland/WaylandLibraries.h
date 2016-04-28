@@ -19,8 +19,6 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/noncopyable.hpp>
-
 #include "windowing/DllWaylandClient.h"
 #include "windowing/DllWaylandEgl.h"
 #include "windowing/DllXKBCommon.h"
@@ -30,13 +28,16 @@ namespace xbmc
 namespace wayland
 {
 template <class DllInterface, class Dll>
-class AutoloadDll :
-  boost::noncopyable
+class AutoloadDll
 {
   public:
 
     AutoloadDll();
     ~AutoloadDll();
+
+    AutoloadDll(const AutoloadDll &) = delete;
+    AutoloadDll &operator=(const AutoloadDll &) = delete;
+
     DllInterface & Get();
 
   private:
@@ -44,10 +45,14 @@ class AutoloadDll :
     Dll m_dll;
 };
 
-class Libraries :
-  boost::noncopyable
+class Libraries
 {
 public:
+
+  Libraries() = default;
+
+  Libraries(const Libraries &) = delete;
+  Libraries &operator=(const Libraries &) = delete;
 
   IDllWaylandClient & ClientLibrary();
   IDllWaylandEGL & EGLLibrary();

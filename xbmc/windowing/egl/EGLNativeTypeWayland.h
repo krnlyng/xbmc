@@ -20,10 +20,10 @@
  *
  */
 
-#include <boost/scoped_ptr.hpp>
-
 #include "system_egl.h"
 #include "EGLNativeType.h"
+
+#include <memory>
 
 class CEGLNativeTypeWayland : public CEGLNativeType
 {
@@ -54,5 +54,5 @@ private:
 
   class Private;
 
-  boost::scoped_ptr <Private> priv;
+  std::unique_ptr<Private> priv;
 };

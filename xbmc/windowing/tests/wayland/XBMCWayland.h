@@ -21,8 +21,6 @@
  */
 #if defined(HAVE_WAYLAND_XBMC_PROTO)
 
-#include <boost/noncopyable.hpp>
-
 struct wl_surface;
 struct xbmc_wayland;
 
@@ -32,13 +30,15 @@ namespace test
 {
 namespace wayland
 {
-class XBMCWayland :
-  boost::noncopyable
+class XBMCWayland
 {
 public:
 
   XBMCWayland(struct xbmc_wayland *xbmcWayland);
   ~XBMCWayland();
+
+  XBMCWayland(const XBMCWayland &) = delete;
+  XBMCWayland &operator=(const XBMCWayland &) = delete;
 
   struct wl_surface * MostRecentSurface();
 

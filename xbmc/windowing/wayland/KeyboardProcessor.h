@@ -19,7 +19,6 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/scoped_ptr.hpp>
 
 #include "input/linux/Keymap.h"
 #include "Keyboard.h"

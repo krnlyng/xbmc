@@ -19,7 +19,6 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/noncopyable.hpp>
 
 class IDllWaylandEGL;
 
@@ -32,8 +31,7 @@ namespace xbmc
 {
 namespace wayland
 {
-class OpenGLSurface :
-  boost::noncopyable
+class OpenGLSurface
 {
 public:
 
@@ -42,6 +40,9 @@ public:
                 int32_t width,
                 int32_t height);
   ~OpenGLSurface();
+
+  OpenGLSurface(const OpenGLSurface &) = delete;
+  OpenGLSurface &operator=(const OpenGLSurface &) = delete;
 
   struct wl_egl_window * GetWlEglWindow();
   EGLNativeWindowType * GetEGLNativeWindow();

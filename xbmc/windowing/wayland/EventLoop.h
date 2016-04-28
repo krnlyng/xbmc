@@ -20,8 +20,7 @@
  *
  */
 #include <vector>
-
-#include <boost/weak_ptr.hpp>
+#include <memory>
 
 #include "utils/Stopwatch.h"
 
@@ -59,7 +58,7 @@ public:
   
   struct CallbackTracker
   {
-    typedef boost::weak_ptr <Callback> CallbackObserver;
+    typedef std::weak_ptr <Callback> CallbackObserver;
     
     CallbackTracker(uint32_t time,
                     uint32_t initial,

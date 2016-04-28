@@ -21,11 +21,7 @@
 
 #include <sstream>
 #include <vector>
-
-#include <boost/scoped_ptr.hpp>
-#include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
-#include <boost/bind.hpp>
+#include <functional>
 
 #include <unistd.h>
 #include <signal.h>
@@ -48,14 +44,17 @@ namespace test
 {
 namespace wayland
 {
-class Listener :
-  boost::noncopyable
+class Listener
 {
 public:
 
-  typedef boost::function<void()> Delegate;
+  typedef std::function<void()> Delegate;
 
   Listener(const Delegate &);
+
+  Listener(const Listener &) = delete;
+  Listener &operator=(const Listener &) = delete;
+
   void BindTo(struct wl_signal *);
 
 private:
@@ -71,19 +70,21 @@ private:
 
 namespace weston
 {
-class Compositor :
-  boost::noncopyable
+class Compositor
 {
 public:
 
   Compositor(struct weston_compositor *);
   ~Compositor();
 
+  Compositor(const Compositor &) = delete;
+  Compositor &operator=(const Compositor &) = delete;
+
   struct wl_display * Display();
 
   struct weston_surface * TopSurface();
   struct weston_mode * LastMode();
-  void OnEachMode(const boost::function<void(struct weston_mode *)> &);
+  void OnEachMode(const std::function<void(struct weston_mode *)> &);
   struct wl_resource * PointerResource(struct wl_client *client);
   struct wl_resource * KeyboardResource(struct wl_client *client);
   struct weston_surface * Surface(struct wl_resource *client);
@@ -104,12 +105,14 @@ private:
 
 namespace wayland
 {
-class XBMCWayland :
-  boost::noncopyable
+class XBMCWayland
 {
 public:
 
   ~XBMCWayland();
+
+  XBMCWayland(const XBMCWayland &) = delete;
+  XBMCWayland &operator=(const XBMCWayland &) = delete;
   
   struct wl_resource * GetResource();
 
@@ -400,10 +403,10 @@ xtw::XBMCWayland::AddMode(struct wl_client *client,
   
   /* Clear flags from all other outputs that may have the same flags
    * as this one */
-  m_compositor.OnEachMode(boost::bind(ClearFlagsOnOtherModes,
-                                      _1,
-                                      flags,
-                                      &m_additionalModes.back()));
+  m_compositor.OnEachMode(std::bind(ClearFlagsOnOtherModes,
+                                    std::placeholders::_1,
+                                    flags,
+                                    &m_additionalModes.back()));
 }
 
 namespace
@@ -561,7 +564,7 @@ xtwc::Compositor::Compositor(struct weston_compositor *c) :
   m_readySource(wl_event_loop_add_timer(wl_display_get_event_loop(Display()),
                                         Compositor::Ready,
                                         this)),
-  m_destroyListener(boost::bind(Compositor::Unload, this))
+  m_destroyListener(std::bind(Compositor::Unload, this))
 {
   /* Dispatch ASAP */
   wl_event_source_timer_update(m_readySource, 1);
@@ -683,7 +686,7 @@ xtwc::Compositor::TopSurface()
 }
 
 void
-xtwc::Compositor::OnEachMode(const boost::function<void(struct weston_mode *)> &action)
+xtwc::Compositor::OnEachMode(const std::function<void(struct weston_mode *)> &action)
 {
   struct weston_output *output = FirstOutput();
   struct weston_mode *mode;

@@ -19,8 +19,6 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/noncopyable.hpp>
-
 #include <wayland-client.h>
 
 class IDllWaylandClient;

@@ -27,12 +27,6 @@
 #include <iostream>
 #include <stdexcept>
 
-#include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
-#include <boost/bind.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
-
 #include <cstdlib>
 
 #include <wayland-client.h>
@@ -63,9 +57,9 @@ class CEGLNativeTypeWayland::Private
 {
 public:
 
-  boost::scoped_ptr<xw::Libraries> m_libraries;
-  boost::scoped_ptr<xw::XBMCConnection> m_connection;
-  boost::scoped_ptr<xw::XBMCSurface> m_surface;
+  std::unique_ptr<xw::Libraries> m_libraries;
+  std::unique_ptr<xw::XBMCConnection> m_connection;
+  std::unique_ptr<xw::XBMCSurface> m_surface;
 
   bool LoadWaylandLibraries();
   void UnloadWaylandLibraries();
@@ -281,7 +275,7 @@ bool CEGLNativeTypeWayland::GetNativeWindow(XBNativeDisplayType **nativeWindow) 
 }
 
 /* DestroyNativeDisplay and DestroyNativeWindow simply just call
- * reset on the relevant scoped_ptr. This will effectively destroy
+ * reset on the relevant unique_ptr. This will effectively destroy
  * the encapsulating objects which cleans up all of the relevant
  * connections and surfaces */
 bool CEGLNativeTypeWayland::DestroyNativeDisplay()

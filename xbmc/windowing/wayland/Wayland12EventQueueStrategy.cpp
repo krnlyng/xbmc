@@ -17,9 +17,7 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include <boost/noncopyable.hpp>
+#include <functional>
 
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
@@ -56,8 +54,8 @@ xw12::EventQueueStrategy::EventQueueStrategy(IDllWaylandClient &clientLibrary,
                                              struct wl_display *display) :
   m_clientLibrary(clientLibrary),
   m_display(display),
-  m_thread(boost::bind(Read, boost::ref(m_clientLibrary), display),
-           boost::bind(Nothing),
+  m_thread(std::bind(Read, std::ref(m_clientLibrary), display),
+           std::bind(Nothing),
            m_clientLibrary.wl_display_get_fd(m_display))
 {
 }

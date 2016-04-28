@@ -19,9 +19,8 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/function.hpp>
-#include <boost/noncopyable.hpp>
-#include <boost/scoped_ptr.hpp>
+#include <functional>
+#include <memory>
 
 struct wl_surface;
 struct wl_callback;
@@ -33,14 +32,16 @@ namespace xbmc
 {
 namespace wayland
 {
-class Surface :
-  boost::noncopyable
+class Surface
 {
 public:
 
   Surface(IDllWaylandClient &clientLibrary,
           struct wl_surface *surface);
   ~Surface();
+
+  Surface(const Surface &) = delete;
+  Surface &operator=(const Surface &) = delete;
 
   struct wl_surface * GetWlSurface();
   struct wl_callback * CreateFrameCallback();
@@ -62,7 +63,7 @@ class WaylandSurfaceListener
 {
 public:
 
-  typedef boost::function<void(Surface &)> Handler;
+  typedef std::function<void(Surface &)> Handler;
   
   void SetHandler(const Handler &);
   void SurfaceCreated(Surface &);
@@ -72,7 +73,7 @@ private:
 
   Handler m_handler;
   
-  static boost::scoped_ptr<WaylandSurfaceListener> m_instance;
+  static std::unique_ptr<WaylandSurfaceListener> m_instance;
 };
 }
 }

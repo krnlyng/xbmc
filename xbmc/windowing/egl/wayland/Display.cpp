@@ -21,8 +21,6 @@
 #include <iostream>
 #include <stdexcept>
 
-#include <boost/function.hpp>
-
 #include <cstdlib>
 
 #include <wayland-client.h>
@@ -42,7 +40,7 @@ xw::WaylandDisplayListener::SetHandler(const Handler &handler)
 void
 xw::WaylandDisplayListener::DisplayAvailable(Display &display)
 {
-  if (!m_handler.empty())
+  if (m_handler)
     m_handler(display);
 }
 
@@ -55,7 +53,7 @@ xw::WaylandDisplayListener::GetInstance()
   return *m_instance;
 }
 
-boost::scoped_ptr<xw::WaylandDisplayListener> xw::WaylandDisplayListener::m_instance;
+std::unique_ptr<xw::WaylandDisplayListener> xw::WaylandDisplayListener::m_instance;
 
 xw::Display::Display(IDllWaylandClient &clientLibrary) :
   m_clientLibrary(clientLibrary),
