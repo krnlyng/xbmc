@@ -25,10 +25,10 @@ $(PLATFORM)/autogen.sh: $(SOURCE)/*
 	cp -a $(SOURCE) $(PLATFORM)
 
 $(PLATFORM)/configure: $(PLATFORM)/autogen.sh
-	cd $(PLATFORM); ./autogen.sh
+	cd $(PLATFORM) && ./autogen.sh
 
 $(PLATFORM)/config.log: $(PLATFORM)/configure
-	cd $(PLATFORM); $(CONFIGURE)
+	cd $(PLATFORM) && $(CONFIGURE)
 
 $(PLATFORM)/JsonSchemaBuilder: $(PLATFORM)/config.log
 	$(MAKE) -C $(PLATFORM)
