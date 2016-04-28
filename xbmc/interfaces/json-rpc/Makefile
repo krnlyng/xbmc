@@ -48,6 +48,7 @@ $(OBJS): $(GENERATED_JSON)
 $(notdir $(GENERATED_ADDON_JSON)): $(GENERATED_ADDON_JSON)
 
 $(GENERATED_ADDON_JSON): $(JSON_VERSION_SRC)
+	mkdir -p $(@D)
 	sed s/@jsonrpc_version@/`cat $(JSON_VERSION_SRC)`/g $@.in > $@
 
 -include $(patsubst %.cpp,%.P,$(patsubst %.c,%.P,$(SRCS)))

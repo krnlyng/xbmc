@@ -14,6 +14,7 @@ endif
 all: $(LIB_SHARED)
 
 $(LIB_SHARED): $(OBJS)
+	@mkdir -p $(@D)
 ifeq ($(findstring osx,$(ARCH)), osx)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -dynamiclib -o $@ $(OBJS)
 else

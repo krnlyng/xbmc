@@ -101,6 +101,7 @@ GEN_DEPS=\
 
 %.o: %.cc
 	@rm -f $@
+	@mkdir -p $(@D)
 	$(SILENT_CPP) $(CXX) -MF $*.d -MD -c $(CXXFLAGS) $(DEFINES) $(INCLUDES) $(CPPFLAGS) $< -o $@ \
 	&& $(GEN_DEPS)
 
