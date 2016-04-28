@@ -19,9 +19,9 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include "windowing/DllWaylandClient.h"
-#include "windowing/DllWaylandEgl.h"
-#include "windowing/DllXKBCommon.h"
+#include "DllWaylandClient.h"
+#include "DllWaylandEgl.h"
+#include "DllXKBCommon.h"
 
 namespace xbmc
 {

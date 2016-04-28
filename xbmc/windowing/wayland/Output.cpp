@@ -23,8 +23,8 @@
 
 #include <wayland-client.h>
 
-#include "windowing/DllWaylandClient.h"
-#include "windowing/WaylandProtocol.h"
+#include "DllWaylandClient.h"
+#include "WaylandProtocol.h"
 #include "Output.h"
 
 namespace xw = xbmc::wayland;

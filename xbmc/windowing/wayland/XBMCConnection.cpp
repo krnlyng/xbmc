@@ -31,8 +31,8 @@
 
 #include "utils/StringUtils.h"
 
-#include "windowing/DllWaylandClient.h"
-#include "windowing/DllXKBCommon.h"
+#include "DllWaylandClient.h"
+#include "DllXKBCommon.h"
 
 #include "Callback.h"
 #include "Compositor.h"
@@ -42,11 +42,11 @@
 #include "Region.h"
 #include "Shell.h"
 
-#include "windowing/WaylandProtocol.h"
+#include "WaylandProtocol.h"
 #include "XBMCConnection.h"
 
-#include "windowing/wayland/Wayland11EventQueueStrategy.h"
-#include "windowing/wayland/Wayland12EventQueueStrategy.h"
+#include "Wayland11EventQueueStrategy.h"
+#include "Wayland12EventQueueStrategy.h"
 
 namespace xbmc
 {

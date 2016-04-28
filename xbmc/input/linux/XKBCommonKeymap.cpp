@@ -29,7 +29,7 @@
 
 #include "Application.h"
 
-#include "windowing/DllXKBCommon.h"
+#include "windowing/wayland/DllXKBCommon.h"
 #include "XKBCommonKeymap.h"
 #include "Util.h"
 

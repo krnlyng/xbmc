@@ -25,9 +25,9 @@
 
 #include <wayland-client.h>
 
-#include "windowing/DllWaylandClient.h"
-#include "windowing/DllXKBCommon.h"
-#include "windowing/WaylandProtocol.h"
+#include "DllWaylandClient.h"
+#include "DllXKBCommon.h"
+#include "WaylandProtocol.h"
 #include "input/linux/XKBCommonKeymap.h"
 #include "Keyboard.h"
 

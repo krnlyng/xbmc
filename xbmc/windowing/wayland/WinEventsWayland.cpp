@@ -25,9 +25,9 @@
 #include "xbmc/windowing/WindowingFactory.h"
 #include "WinEventsWayland.h"
 
-#include "wayland/EventListener.h"
-#include "wayland/InputFactory.h"
-#include "wayland/EventLoop.h"
+#include "EventListener.h"
+#include "InputFactory.h"
+#include "EventLoop.h"
 
 #include <memory>
 

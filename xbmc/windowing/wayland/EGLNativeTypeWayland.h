@@ -21,7 +21,7 @@
  */
 
 #include "system_egl.h"
-#include "EGLNativeType.h"
+#include "windowing/egl/EGLNativeType.h"
 
 #include <memory>
 

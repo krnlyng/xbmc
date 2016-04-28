@@ -23,7 +23,7 @@
 #include "utils/log.h"
 #include <assert.h>
 #if defined(HAVE_WAYLAND)
-  #include "EGLNativeTypeWayland.h"
+  #include "windowing/wayland/EGLNativeTypeWayland.h"
 #endif
 #if defined(TARGET_ANDROID)
   #include "EGLNativeTypeAndroid.h"

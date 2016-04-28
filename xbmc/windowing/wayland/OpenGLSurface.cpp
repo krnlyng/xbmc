@@ -20,7 +20,7 @@
 #include <wayland-client.h>
 #include <wayland-egl.h>
 
-#include "windowing/DllWaylandEgl.h"
+#include "DllWaylandEgl.h"
 #include "OpenGLSurface.h"
 
 namespace xw = xbmc::wayland;

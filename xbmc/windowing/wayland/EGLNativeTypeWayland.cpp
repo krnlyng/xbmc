@@ -32,19 +32,19 @@
 #include <wayland-client.h>
 #include <wayland-version.h>
 
-#include "windowing/DllWaylandClient.h"
-#include "windowing/DllWaylandEgl.h"
-#include "windowing/DllXKBCommon.h"
-#include "windowing/WaylandProtocol.h"
+#include "DllWaylandClient.h"
+#include "DllWaylandEgl.h"
+#include "DllXKBCommon.h"
+#include "WaylandProtocol.h"
 
 #include "guilib/gui3d.h"
 #include "utils/log.h"
 #include "windowing/WinEvents.h"
-#include "windowing/WinEventsWayland.h"
+#include "WinEventsWayland.h"
 
-#include "wayland/WaylandLibraries.h"
-#include "wayland/XBMCConnection.h"
-#include "wayland/XBMCSurface.h"
+#include "WaylandLibraries.h"
+#include "XBMCConnection.h"
+#include "XBMCSurface.h"
 
 #endif
 

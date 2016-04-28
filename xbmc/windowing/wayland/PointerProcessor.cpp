@@ -20,8 +20,8 @@
 #include <wayland-client.h>
 #include <xkbcommon/xkbcommon.h>
 
-#include "windowing/DllWaylandClient.h"
-#include "windowing/DllXKBCommon.h"
+#include "DllWaylandClient.h"
+#include "DllXKBCommon.h"
 
 #include "CursorManager.h"
 #include "EventListener.h"

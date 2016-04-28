@@ -25,7 +25,7 @@
 
 #include <wayland-client.h>
 
-#include "windowing/WaylandProtocol.h"
+#include "WaylandProtocol.h"
 
 class IDllWaylandClient;
 

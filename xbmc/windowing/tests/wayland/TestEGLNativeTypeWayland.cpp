@@ -34,10 +34,10 @@
 #include "xbmc_wayland_test_client_protocol.h"
 #endif
 
-#include "windowing/egl/wayland/Display.h"
-#include "windowing/egl/wayland/Registry.h"
-#include "windowing/egl/wayland/Surface.h"
-#include "windowing/egl/EGLNativeTypeWayland.h"
+#include "windowing/wayland/Display.h"
+#include "windowing/wayland/Registry.h"
+#include "windowing/wayland/Surface.h"
+#include "windowing/wayland/EGLNativeTypeWayland.h"
 
 #include "TmpEnv.h"
 #include "WestonTest.h"

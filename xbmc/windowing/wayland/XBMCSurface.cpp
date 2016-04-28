@@ -24,8 +24,8 @@
 
 #include <wayland-client.h>
 
-#include "windowing/DllWaylandClient.h"
-#include "windowing/DllWaylandEgl.h"
+#include "DllWaylandClient.h"
+#include "DllWaylandEgl.h"
 
 #include "Callback.h"
 #include "Compositor.h"
@@ -36,7 +36,7 @@
 #include "ShellSurface.h"
 #include "Surface.h"
 
-#include "windowing/WaylandProtocol.h"
+#include "WaylandProtocol.h"
 #include "XBMCSurface.h"
 
 namespace xbmc

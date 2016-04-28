@@ -1,6 +1,5 @@
 SRCS=WinEventsSDL.cpp \
      WinEventsLinux.cpp \
-     WinEventsWayland.cpp \
      WinEventsX11.cpp \
      WinSystem.cpp \
      WinEvents.cpp
@@ -17,6 +16,21 @@ SRCS += wayland/EventLoop.cpp \
         wayland/PollThread.cpp \
         wayland/Wayland11EventQueueStrategy.cpp \
         wayland/Wayland12EventQueueStrategy.cpp
+SRCS+= wayland/Callback.cpp \
+       wayland/Compositor.cpp \
+       wayland/Display.cpp \
+       wayland/OpenGLSurface.cpp \
+       wayland/Output.cpp \
+       wayland/Region.cpp \
+       wayland/Registry.cpp \
+       wayland/Shell.cpp \
+       wayland/ShellSurface.cpp \
+       wayland/Surface.cpp \
+       wayland/WaylandLibraries.cpp \
+       wayland/XBMCConnection.cpp \
+       wayland/XBMCSurface.cpp
+SRCS+= wayland/EGLNativeTypeWayland.cpp \
+     wayland/WinEventsWayland.cpp
 endif
 
 LIB=windowing.a

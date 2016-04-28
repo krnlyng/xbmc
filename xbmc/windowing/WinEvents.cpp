@@ -47,7 +47,7 @@
 #define WinEventsType CWinEventsX11
 
 #elif defined(HAVE_WAYLAND)
-#include "WinEventsWayland.h"
+#include "wayland/WinEventsWayland.h"
 #define WinEventsType CWinEventsWayland
 
 #elif defined(TARGET_LINUX) && defined(HAS_LINUX_EVENTS)

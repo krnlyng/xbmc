@@ -24,7 +24,7 @@
 #define _GNU_SOURCE
 #endif
 
-#include "windowing/DllWaylandClient.h"
+#include "DllWaylandClient.h"
 #include "utils/log.h"
 
 #include "Wayland11EventQueueStrategy.h"
