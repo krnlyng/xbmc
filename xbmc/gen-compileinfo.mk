@@ -13,6 +13,7 @@ $(FILEPATH)/.GitRevision:
 	@if test -f $(GITVERFILE); then \
           GITREV=$$(cat $(GITVERFILE)) ;\
         elif test "$(GIT)" = "git" && test -d $(FILEPATH)/../.git ; then \
+          export GIT_DIR="$(FILEPATH)/../.git"; \
           if ! git diff-files --ignore-submodules --quiet -- || ! git diff-index --cached --ignore-submodules --quiet HEAD --; then \
             BUILD_DATE=$$(date -u "+%F"); \
             BUILD_SCMID=$$(git --no-pager log --abbrev=7 -n 1 --pretty=format:"%h-dirty"); \
