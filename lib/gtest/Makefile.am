@@ -278,15 +278,15 @@ $(FUSED_GTEST_SRC): fused-gtest
 fused-gtest: $(pkginclude_HEADERS) $(pkginclude_internal_HEADERS) \
              $(GTEST_SRC) src/gtest-all.cc src/gtest_main.cc \
              scripts/fuse_gtest_files.py
-	mkdir -p "$(srcdir)/fused-src"
-	chmod -R u+w "$(srcdir)/fused-src"
-	rm -f "$(srcdir)/fused-src/gtest/gtest-all.cc"
-	rm -f "$(srcdir)/fused-src/gtest/gtest.h"
-	"$(srcdir)/scripts/fuse_gtest_files.py" "$(srcdir)/fused-src"
-	cp -f "$(srcdir)/src/gtest_main.cc" "$(srcdir)/fused-src/gtest/"
+	mkdir -p "$(builddir)/fused-src"
+	chmod -R u+w "$(builddir)/fused-src"
+	rm -f "$(builddir)/fused-src/gtest/gtest-all.cc"
+	rm -f "$(builddir)/fused-src/gtest/gtest.h"
+	"$(srcdir)/scripts/fuse_gtest_files.py" "$(builddir)/fused-src"
+	cp -f "$(srcdir)/src/gtest_main.cc" "$(builddir)/fused-src/gtest/"
 
 maintainer-clean-local:
-	rm -rf "$(srcdir)/fused-src"
+	rm -rf "$(builddir)/fused-src"
 endif
 
 # Death tests may produce core dumps in the build directory. In case
