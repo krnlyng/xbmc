@@ -1745,7 +1745,7 @@ if test "x$use_vaapi" != "xno"; then
   else
     initial_val=$use_vaapi
     if test "x$use_vaapi" != "xno"; then
-      libva_pkgs="libva"
+      libva_pkgs="libva >= 0.36.0"
       if test "$use_x11" = "yes"; then
       	libva_pkgs="$libva_pkgs libva-x11"
       fi
