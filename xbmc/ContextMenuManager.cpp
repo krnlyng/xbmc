@@ -174,6 +174,7 @@ bool CONTEXTMENU::ShowFor(const CFileItemPtr& fileItem, const CContextMenuItem& 
     return true;
 
   CContextButtons buttons;
+  buttons.reserve(menuItems.size());
   for (int i = 0; i < menuItems.size(); ++i)
     buttons.Add(i, menuItems[i]->GetLabel(*fileItem));
 
