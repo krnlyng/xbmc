@@ -60,7 +60,9 @@ Split(const char *p, char separator)
 
   SplitForEach(p, separator, [&list](const char *token){
       list.push_back(token);
-    });
+  });
+
+  return list;
 }
 
 namespace
