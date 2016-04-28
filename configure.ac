@@ -2451,7 +2451,9 @@ xb_popd()
 AC_DEFUN([XB_CONFIG_MODULE],[
 AC_CONFIG_COMMANDS_POST([
 if [[ $3 != "1" ]]; then
-    if [[ -d $1 ]]; then
+    module_srcdir="$abs_top_srcdir/$1"
+    if [[ -d $module_srcdir ]]; then
+      mkdir -p $1
       xb_pushd $1
       $2
       if [[ $? -ne 0 ]]; then
@@ -2470,7 +2472,7 @@ fi
 ])
 
 XB_CONFIG_MODULE([lib/cpluff], [
-  ./configure --disable-nls \
+  $module_srcdir/configure --disable-nls \
     --prefix="${prefix}" --includedir="${includedir}" --libdir="${libdir}" --datadir="${datadir}" \
     --host=$host_alias \
     --build=$build_alias \
@@ -2479,7 +2481,7 @@ XB_CONFIG_MODULE([lib/cpluff], [
 ], [0])
 
 XB_CONFIG_MODULE([lib/gtest], [
-  ./configure \
+  $module_srcdir/configure \
     CC="$CC" \
     CXX="$CXX" \
     CFLAGS="$CFLAGS" \
