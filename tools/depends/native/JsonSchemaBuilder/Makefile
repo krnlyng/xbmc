@@ -18,26 +18,27 @@ SOURCE=$(ROOT_DIR)/src
 CONFIGURE=./configure --prefix=$(PREFIX)
 APP=$(PREFIX)/bin/JsonSchemaBuilder
 
-all: .installed-$(PLATFORM)
+all: $(APP)
 
-$(PLATFORM):
+$(PLATFORM)/autogen.sh: $(SOURCE)/*
 	rm -rf $(PLATFORM)
 	cp -a $(SOURCE) $(PLATFORM)
+
+$(PLATFORM)/configure: $(PLATFORM)/autogen.sh
 	cd $(PLATFORM); ./autogen.sh
+
+$(PLATFORM)/config.log: $(PLATFORM)/configure
 	cd $(PLATFORM); $(CONFIGURE)
 
-
-$(APP): $(PLATFORM)
+$(PLATFORM)/JsonSchemaBuilder: $(PLATFORM)/config.log
 	$(MAKE) -C $(PLATFORM)
 
-
-.installed-$(PLATFORM): $(APP)
+$(APP): $(PLATFORM)/JsonSchemaBuilder
 	$(MAKE) -C $(PLATFORM) install
-	touch $@
 
 clean:
 	$(MAKE) -C $(PLATFORM) clean
 
 distclean::
-	rm -rf $(PLATFORM) .installed-$(PLATFORM)
+	rm -rf $(PLATFORM)
 	-rm -rf bin
