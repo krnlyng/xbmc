@@ -9,7 +9,7 @@ SUBDIRS = docsrc
 LIBS = @LIBS_LIBCPLUFF@ @LTLIBINTL@ @LIBS@
 
 CPPFLAGS = @CPPFLAGS@
-CPPFLAGS += -I. -DCP_C_API=CP_EXPORT -DCP_HOST="\"$(host)\"" -DCP_DATADIR="\"$(datadir)\""
+CPPFLAGS += -I. -I$(srcdir) -DCP_C_API=CP_EXPORT -DCP_HOST="\"$(host)\"" -DCP_DATADIR="\"$(datadir)\""
 
 DOXYGEN = doxygen
 DOXYGEN_SOURCE = cpluffdef.h $(srcdir)/cpluff.h $(srcdir)/docsrc/*.dox
