@@ -19,7 +19,6 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
-#include <boost/noncopyable.hpp>
 
 #include "input/linux/Keymap.h"
 
