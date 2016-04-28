@@ -34,6 +34,7 @@ xbmc::PointerProcessor::PointerProcessor(IEventListener &listener,
   m_listener(listener),
   m_cursorManager(manager)
 {
+    /* XXX: Need to set m_lastPointerX and m_lastPointerY */
 }
 
 void xbmc::PointerProcessor::Motion(uint32_t time,
