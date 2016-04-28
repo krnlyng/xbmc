@@ -216,7 +216,14 @@ public:
   SelectionStream& Get     (StreamType type, int index);
   bool             Get     (StreamType type, CDemuxStream::EFlags flag, SelectionStream& out);
 
+  /**
+   * Note: calling this method makes the whole instance thread-unsafe.
+   */
   SelectionStreams Get(StreamType type);
+
+  /**
+   * Note: calling this method makes the whole instance thread-unsafe.
+   */
   template<typename Compare> SelectionStreams Get(StreamType type, Compare compare)
   {
     SelectionStreams streams = Get(type);
