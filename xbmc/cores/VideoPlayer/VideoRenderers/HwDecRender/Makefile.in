@@ -6,6 +6,10 @@ SRCS += RendererVDPAU.cpp
 SRCS += RendererMediaCodec.cpp
 endif
 
+ifeq (@USE_OPENGLES@,1)
+SRCS += RendererVAAPI.cpp
+endif
+
 ifeq (@USE_MMAL@,1)
 SRCS += MMALRenderer.cpp
 endif

@@ -24,9 +24,16 @@
 
 #ifdef HAVE_LIBVA
 
+#ifdef HAS_GL
 #include "cores/VideoPlayer/VideoRenderers/LinuxRendererGL.h"
+using CRendererVAAPIBase = CLinuxRendererGL;
+#else
+#include "cores/VideoPlayer/VideoRenderers/LinuxRendererGLES.h"
+using CRendererVAAPIBase = CLinuxRendererGLES;
+#endif
 
-class CRendererVAAPI : public CLinuxRendererGL
+
+class CRendererVAAPI : public CRendererVAAPIBase
 {
 public:
   CRendererVAAPI();
