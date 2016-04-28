@@ -49,7 +49,7 @@ SplitForEach(const char *p, char separator, F &&f)
     }
 
     if (q > p)
-      f(std::string(p, q).c_str());
+      f(std::string(p, q));
 
     p = q + 1;
   }
@@ -60,7 +60,7 @@ Split(const char *p, char separator)
 {
   std::list<std::string> list;
 
-  SplitForEach(p, separator, [&list](const char *token){
+  SplitForEach(p, separator, [&list](std::string const &token){
       list.push_back(token);
   });
 
