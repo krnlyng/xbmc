@@ -21,7 +21,7 @@ INCLUDES += -I@abs_top_srcdir@/lib/gtest/include -I@WAYLAND_TEST_INCLUDES@
 LIB = test_wayland.a
 
 ifneq (,@WAYLAND_SCANNER@)
-SRCS += $(WAYLAND_TEST_MODULE_PROTOCOL_SRCS)
+GENERATED += $(WAYLAND_TEST_MODULE_PROTOCOL_SRCS)
 endif
 
 CLEAN_FILES += $(WAYLAND_TEST_MODULE_PROTOCOL_GENERATED_SRCS) xbmc-wayland-test-extension.so
