@@ -10,6 +10,9 @@ endif
 ifeq (@USE_MMAL@,1)
 SRCS+= EGLNativeTypeRaspberryPI.cpp
 endif
+ifeq (@USE_SUNXI_MALI@,1)
+SRCS+= EGLNativeTypeSunxiMali.cpp
+endif
 ifeq (@USE_IMXVPU@,1)
 SRCS+= EGLNativeTypeIMX.cpp
 endif

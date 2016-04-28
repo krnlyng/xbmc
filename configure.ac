@@ -172,6 +172,8 @@ missing_headers="Could not find some required headers. Please see the README for
 missing_program="Could not find a required program. Please see the README for your platform."
 alsa_disabled="== ALSA support disabled. =="
 dbus_disabled="== DBUS support disabled. =="
+sunxi_mali_enabled="== Sunxi Mali enabled. =="
+sunxi_mali_disabled="== Sunxi Mali disabled. =="
 wayland_enabled="== Wayland enabled. =="
 wayland_disabled="== Wayland disabled. =="
 x11_enabled="== X11 enabled. =="
@@ -296,6 +298,12 @@ AC_ARG_ENABLE([profiling],
   [enable gprof profiling (default is no)])],
   [use_profiling=$enableval],
   [use_profiling=no])
+
+AC_ARG_ENABLE([sunxi_mali],
+  [AS_HELP_STRING([--enable-sunxi-mali],
+  [enable Sunxi Mali frame buffer (default is no) 'Linux Only'])],
+  [use_sunxi_mali=$enableval],
+  [use_sunxi_mali=no])
 
 AC_ARG_ENABLE([wayland],
   [AS_HELP_STRING([--enable-wayland],
@@ -920,6 +928,23 @@ if test -z "$PYTHON_VERSION"; then
 else
   LIBS="$LIBS $PYTHON_LDFLAGS"
   AC_MSG_NOTICE([Using Python $PYTHON_VERSION])
+fi
+
+# Sunxi Mali frame buffer
+if test "$use_sunxi_mali" = "yes"; then
+  AC_MSG_NOTICE($mali_enabled)
+  AC_CHECK_MEMBER([struct mali_native_window.width], [],
+    AC_MSG_ERROR($missing_library), [[#include <EGL/egl.h>]])
+  AC_DEFINE([HAVE_SUNXI_MALI], [1], [Define to 1 if you have Sunxi Mali libs installed.])
+
+  # Disable SDL and X11 builds
+  use_joystick=no
+  use_x11=no
+
+  # Mali supports only the OpenGL ES API
+  use_gles=yes
+else
+  AC_MSG_RESULT($mali_disabled)
 fi
 
 # Wayland
@@ -1986,6 +2011,13 @@ else
   final_message="$final_message\n  X11:\t\tNo"
 fi
 
+if test "$use_sunxi_mali" = "yes"; then
+  final_message="$final_message\n  Sunxi Mali:\tYes"
+  USE_SUNXI_MALI=1
+else
+  final_message="$final_message\n  Sunxi Mali:\tNo"
+fi
+
 if test "$use_wayland" = "yes"; then
   final_message="$final_message\n  Wayland:\tYes"
   USE_WAYLAND=1
@@ -2515,6 +2547,7 @@ AC_SUBST(USE_LIBUSB)
 AC_SUBST(USE_LIBCEC)
 AC_SUBST(USE_LIBBLUETOOTH)
 AC_SUBST(USE_MYSQL)
+AC_SUBST(USE_SUNXI_MALI)
 AC_SUBST(USE_WAYLAND)
 AC_SUBST(USE_WEB_SERVER)
 AC_SUBST(USE_UPNP)
