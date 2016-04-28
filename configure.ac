@@ -989,6 +989,9 @@ if test "$use_wayland" = "yes"; then
         AC_DEFINE([HAVE_WESTON_SDK], [1], [Define to 1 if Weston SDK is installed.])
         AC_SUBST(USE_WAYLAND_TEST_EXTENSION, 1)
         AC_DEFINE([HAVE_WAYLAND_XBMC_PROTO],[1],["Define to 1 if the wayland test-protocol will be built"])
+      else
+        AC_SUBST(WAYLAND_TEST_LIBS,"$WAYLAND_CLIENT_LIBS $XKBCOMMON_LIBS $PIXMAN_LIBS")
+        AC_SUBST(WAYLAND_TEST_INCLUDES,"$WAYLAND_CLIENT_CFLAGS $XKBCOMMON_CFLAGS $PIXMAN_CFLAGS")
       fi
       AC_SUBST(WAYLAND_SCANNER)
     fi
