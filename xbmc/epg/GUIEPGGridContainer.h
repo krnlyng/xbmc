@@ -25,10 +25,10 @@
 #include "guilib/GUIListItemLayout.h"
 #include "guilib/IGUIContainer.h"
 
+#include <stddef.h>
+
 namespace EPG
 {
-  #define MAXBLOCKS   (33 * 24 * 60 / 5) //! 33 days of 5 minute blocks (31 days for upcoming data + 1 day for past data + 1 day for fillers)
-
   struct GridItemsPtr
   {
     CFileItemPtr item;
@@ -40,6 +40,8 @@ namespace EPG
 
   class CGUIEPGGridContainer : public IGUIContainer
   {
+    static const size_t MAXBLOCKS = (33 * 24 * 60 / 5); //! 33 days of 5 minute blocks (31 days for upcoming data + 1 day for past data + 1 day for fillers)
+
   public:
     CGUIEPGGridContainer(int parentID, int controlID, float posX, float posY, float width, float height,
                          int scrollTime, int preloadItems, int minutesPerPage,
