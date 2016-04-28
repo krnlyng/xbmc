@@ -21,8 +21,8 @@ APP=$(PREFIX)/bin/JsonSchemaBuilder
 all: .installed-$(PLATFORM)
 
 $(PLATFORM):
-	-rm -rf $(PLATFORM)/*; mkdir -p $(PLATFORM)
-	cd $(PLATFORM); cp -a $(SOURCE)/* .
+	rm -rf $(PLATFORM)
+	cp -a $(SOURCE) $(PLATFORM)
 	cd $(PLATFORM); ./autogen.sh
 	cd $(PLATFORM); $(CONFIGURE)
 
