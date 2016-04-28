@@ -115,6 +115,7 @@ public:
 
   InputEventsWestonTest();
   virtual void SetUp();
+  virtual void TearDown();
 
 protected:
 
@@ -220,6 +221,11 @@ void InputEventsWestonTest::SetUp()
 
   wl_shell_surface_set_toplevel(shellSurface->GetWlShellSurface());
   surface->Commit();
+}
+
+void InputEventsWestonTest::TearDown()
+{
+    WaitForSynchronize();
 }
 
 bool InputEventsWestonTest::OnGlobalInterfaceAvailable(uint32_t name,
