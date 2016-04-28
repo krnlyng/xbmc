@@ -35,7 +35,7 @@
 #endif
 
 #include "system_gl.h"
-#include <EGL/egl.h>
+#include "system_egl.h"
 #include <EGL/eglext.h>
 #include "threads/Thread.h"
 

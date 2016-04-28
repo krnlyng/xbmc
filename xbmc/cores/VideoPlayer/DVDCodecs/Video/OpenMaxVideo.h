@@ -22,7 +22,7 @@
 #if defined(HAVE_LIBOPENMAX)
 
 #include "OpenMax.h"
-#include <EGL/egl.h>
+#include "system_egl.h"
 #include <EGL/eglext.h>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>

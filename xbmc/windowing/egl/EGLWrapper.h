@@ -21,7 +21,7 @@
  */
 
 #include "guilib/Resolution.h"
-#include <EGL/egl.h>
+#include "system_egl.h"
 class CEGLNativeType;
 class CEGLWrapper
 {
