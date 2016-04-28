@@ -6,5 +6,5 @@ SRCS= \
 .SUFFIXES : .m .mm
 LIB=windowing_osx.a
 
-include ../../../Makefile.include
+include @abs_top_builddir@/Makefile.include
 -include $(patsubst %.mm,%.P,$(SRCS))

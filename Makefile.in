@@ -297,7 +297,7 @@ all : $(FINAL_TARGETS)
 	@echo '@APP_NAME@ built successfully'
 	@echo '-----------------------'
 
-include Makefile.include
+include @abs_top_builddir@/Makefile.include
 
 .PHONY : dllloader exports eventclients \
 	dvdpcodecs dvdpextcodecs codecs externals force skins libaddon check \

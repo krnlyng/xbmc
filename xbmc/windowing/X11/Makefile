@@ -8,5 +8,5 @@ SRCS=WinSystemX11.cpp \
      
 LIB=windowing_X11.a
 
-include ../../../Makefile.include
+include @abs_top_builddir@/Makefile.include
 -include $(patsubst %.cpp,%.P,$(patsubst %.c,%.P,$(SRCS)))

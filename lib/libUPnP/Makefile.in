@@ -102,7 +102,7 @@ INCLUDES=-I./Neptune/Source/Core -I./Platinum/Source/Core -I./Platinum/Source/Pl
 
 LIB=libupnp.a
 
-include ../../Makefile.include
+include @abs_top_builddir@/Makefile.include
 -include $(filter %.P, $(OBJS:.o=.P))
 
 endif

@@ -30,4 +30,4 @@ install: Clients/WiiRemote/WiiRemote
 	mkdir -p $(DESTDIR)$(datarootdir)/pixmaps/@APP_NAME_LC@
 	cp -a icons/* $(DESTDIR)$(datarootdir)/pixmaps/@APP_NAME_LC@/
 
-include ../../Makefile.include
+include @abs_top_builddir@/Makefile.include

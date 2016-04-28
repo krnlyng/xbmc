@@ -64,5 +64,5 @@ SRCS      += Os.cpp
 LIB        = jni.a
 
 CXXFLAGS+=-std=gnu++0x -Wextra
-include @abs_top_srcdir@/Makefile.include
+include @abs_top_builddir@/Makefile.include
 -include $(patsubst %.cpp,%.P,$(patsubst %.c,%.P,$(SRCS)))

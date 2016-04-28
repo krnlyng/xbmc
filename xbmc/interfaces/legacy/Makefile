@@ -32,6 +32,6 @@ LIB=legacy.a
 
 CXXFLAGS+= -DSWIGRUNTIME_DEBUG -DSTATIC_LINKED
 
-include ../../../Makefile.include
+include @abs_top_builddir@/Makefile.include
 -include $(patsubst %.cpp,%.P,$(patsubst %.c,%.P,$(SRCS)))
 

@@ -35,4 +35,4 @@ CLEAN_FILES = \
 DISTCLEAN_FILES= \
 	Makefile \
 
-include ../../../Makefile.include
+include @abs_top_builddir@/Makefile.include

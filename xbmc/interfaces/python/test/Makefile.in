@@ -6,5 +6,5 @@ LIB=pythonSwigTest.a
 INCLUDES += -I../../../../lib/gtest/include
 INCLUDES += @PYTHON_CPPFLAGS@
 
-include ../../../../Makefile.include
+include @abs_top_builddir@/Makefile.include
 -include $(patsubst %.cpp,%.P,$(patsubst %.c,%.P,$(SRCS)))

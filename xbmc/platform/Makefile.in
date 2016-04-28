@@ -19,5 +19,5 @@ endif
 
 LIB=platform.a
 
-include @abs_top_srcdir@/Makefile.include
+include @abs_top_builddir@/Makefile.include
 -include $(patsubst %.m,%.P,$(patsubst %.mm,%.P,$(patsubst %.cpp,%.P,$(patsubst %.c,%.P,$(SRCS)))))

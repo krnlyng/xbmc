@@ -100,5 +100,5 @@ $(DVDCSS_A):
 	$(MAKE) -C @abs_top_srcdir@/tools/depends/target/libdvdcss
 endif
 
-include @abs_top_srcdir@/Makefile.include
+include @abs_top_builddir@/Makefile.include
 
