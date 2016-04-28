@@ -23,7 +23,7 @@
  *
  */
 
-#include "rendering/gles/RenderSystemGLES.h"
+#include "rendering/gl/RenderSystemGL.h"
 #include "utils/GlobalsHandling.h"
 #include "system_egl.h"
 #include "windowing/WinSystem.h"
@@ -31,7 +31,7 @@
 class CEGLWrapper;
 class IDispResource;
 
-class CWinSystemEGL : public CWinSystemBase, public CRenderSystemGLES
+class CWinSystemEGL : public CWinSystemBase, public CRenderSystemGL
 {
 public:
   CWinSystemEGL();

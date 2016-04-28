@@ -2372,7 +2372,6 @@ OUTPUT_FILES="Makefile \
     xbmc/pvr/recordings/Makefile \
     xbmc/pvr/timers/Makefile \
     xbmc/pvr/windows/Makefile \
-    xbmc/rendering/gles/Makefile \
     xbmc/rendering/gl/Makefile \
     xbmc/rendering/Makefile \
     xbmc/settings/dialogs/Makefile \

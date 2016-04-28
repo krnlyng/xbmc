@@ -133,7 +133,7 @@ DIRECTORY_ARCHIVES += xbmc/rendering/gl/rendering_gl.a
 endif
 
 ifeq (@USE_OPENGLES@,1)
-DIRECTORY_ARCHIVES += xbmc/rendering/gles/rendering_gles.a
+DIRECTORY_ARCHIVES += xbmc/rendering/gl/rendering_gl.a
 DIRECTORY_ARCHIVES += xbmc/windowing/egl/windowing_egl.a
 endif
 

@@ -25,7 +25,7 @@
 
 #if defined(TARGET_DARWIN_IOS)
 #include "windowing/WinSystem.h"
-#include "rendering/gles/RenderSystemGLES.h"
+#include "rendering/gl/RenderSystemGL.h"
 #include "utils/GlobalsHandling.h"
 #include "threads/CriticalSection.h"
 
@@ -33,7 +33,7 @@ class IDispResource;
 class CVideoSyncIos;
 struct CADisplayLinkWrapper;
 
-class CWinSystemIOS : public CWinSystemBase, public CRenderSystemGLES
+class CWinSystemIOS : public CWinSystemBase, public CRenderSystemGL
 {
 public:
   CWinSystemIOS();

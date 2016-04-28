@@ -25,19 +25,13 @@
 #include "WinSystemX11.h"
 #include "EGL/egl.h"
 #include "utils/GlobalsHandling.h"
-
-#ifdef HAS_GLES
-#include "rendering/gles/RenderSystemGLES.h"
-#else
 #include "rendering/gl/RenderSystemGL.h"
+
+#ifdef HAS_GL
 #include "GL/glx.h"
 #endif
 
 class CGLContext;
-
-#ifdef HAS_GLES
-using CRenderSystemGL = CRenderSystemGLES;
-#endif
 
 class CWinSystemX11GLContext : public CWinSystemX11, public CRenderSystemGL
 {

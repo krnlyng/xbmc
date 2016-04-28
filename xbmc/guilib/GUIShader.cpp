@@ -138,7 +138,7 @@ bool CGUIShader::OnEnabled()
    * the calculation of the window x/y coordinates further down the line.
    *
    * (Minor detail: we don't quite deal in window coordinates as defined by
-   * OpenGL, because CRenderSystemGLES::SetScissors flips the Y axis. But all
+   * OpenGL, because CRenderSystemGL::SetScissors flips the Y axis. But all
    * that's needed to handle that is an effective negation at the stage where
    * Y is in normalised device coordinates.)
    */

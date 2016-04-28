@@ -1,1 +1,1 @@
-xbmc/rendering/gl rendering/gl # OPENGL
+xbmc/rendering/gl rendering/gl # OPENGL OPENGLES

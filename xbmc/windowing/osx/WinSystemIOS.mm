@@ -135,7 +135,7 @@ bool CWinSystemIOS::ResizeWindow(int newWidth, int newHeight, int newLeft, int n
     m_nHeight = newHeight;
   }
 
-  CRenderSystemGLES::ResetRenderSystem(newWidth, newHeight, false, 0);
+  CRenderSystemGL::ResetRenderSystem(newWidth, newHeight, false, 0);
 
   return true;
 }
@@ -150,7 +150,7 @@ bool CWinSystemIOS::SetFullScreen(bool fullScreen, RESOLUTION_INFO& res, bool bl
 
   CLog::Log(LOGDEBUG, "About to switch to %i x %i on screen %i",m_nWidth, m_nHeight, res.iScreen);
   SwitchToVideoMode(res.iWidth, res.iHeight, res.fRefreshRate, res.iScreen);
-  CRenderSystemGLES::ResetRenderSystem(res.iWidth, res.iHeight, fullScreen, res.fRefreshRate);
+  CRenderSystemGL::ResetRenderSystem(res.iWidth, res.iHeight, fullScreen, res.fRefreshRate);
   
   return true;
 }
@@ -316,7 +316,7 @@ void CWinSystemIOS::FillInVideoModes()
 bool CWinSystemIOS::IsExtSupported(const char* extension)
 {
   if(strncmp(extension, "EGL_", 4) != 0)
-    return CRenderSystemGLES::IsExtSupported(extension);
+    return CRenderSystemGL::IsExtSupported(extension);
 
   std::string name;
 
@@ -333,7 +333,7 @@ bool CWinSystemIOS::BeginRender()
 
   [g_xbmcController setFramebuffer];
 
-  rtn = CRenderSystemGLES::BeginRender();
+  rtn = CRenderSystemGL::BeginRender();
   return rtn;
 }
 
@@ -341,7 +341,7 @@ bool CWinSystemIOS::EndRender()
 {
   bool rtn;
 
-  rtn = CRenderSystemGLES::EndRender();
+  rtn = CRenderSystemGL::EndRender();
   return rtn;
 }
 

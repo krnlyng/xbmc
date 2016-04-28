@@ -339,14 +339,14 @@ bool CWinSystemEGL::DestroyWindow()
 
 bool CWinSystemEGL::ResizeWindow(int newWidth, int newHeight, int newLeft, int newTop)
 {
-  CRenderSystemGLES::ResetRenderSystem(newWidth, newHeight, true, 0);
+  CRenderSystemGL::ResetRenderSystem(newWidth, newHeight, true, 0);
   return true;
 }
 
 bool CWinSystemEGL::SetFullScreen(bool fullScreen, RESOLUTION_INFO& res, bool blankOtherDisplays)
 {
   CreateNewWindow("", fullScreen, res, NULL);
-  CRenderSystemGLES::ResetRenderSystem(res.iWidth, res.iHeight, fullScreen, res.fRefreshRate);
+  CRenderSystemGL::ResetRenderSystem(res.iWidth, res.iHeight, fullScreen, res.fRefreshRate);
   return true;
 }
 
@@ -441,7 +441,7 @@ bool CWinSystemEGL::IsExtSupported(const char* extension)
   name += extension;
   name += " ";
 
-  return (m_extensions.find(name) != std::string::npos || CRenderSystemGLES::IsExtSupported(extension));
+  return (m_extensions.find(name) != std::string::npos || CRenderSystemGL::IsExtSupported(extension));
 }
 
 void CWinSystemEGL::PresentRenderImpl(bool rendered)
