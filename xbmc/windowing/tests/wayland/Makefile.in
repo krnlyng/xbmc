@@ -17,7 +17,7 @@ WAYLAND_TEST_MODULE_PROTOCOL_GENERATED_SRCS += xbmc_wayland_test_client_protocol
 WAYLAND_TEST_MODULE_SRCS = XBMCWaylandTestExtension.cpp
 
 INCLUDES += -I@builddir@
-INCLUDES += -I@abs_top_srcdir@/lib/gtest/include -I@WAYLAND_TEST_INCLUDES@
+INCLUDES += -I@abs_top_srcdir@/lib/gtest/include @WAYLAND_TEST_INCLUDES@
 LIB = test_wayland.a
 
 ifneq (,@WAYLAND_SCANNER@)
