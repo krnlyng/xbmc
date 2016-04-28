@@ -118,6 +118,7 @@ SelectionStream& CSelectionStreams::Get(StreamType type, int index)
 
 std::vector<SelectionStream> CSelectionStreams::Get(StreamType type)
 {
+  CSingleLock lock(m_section);
   std::vector<SelectionStream> streams;
   std::copy_if(m_Streams.begin(), m_Streams.end(), std::back_inserter(streams),
     [type](const SelectionStream &stream)
