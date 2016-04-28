@@ -50,7 +50,7 @@ $(GENDIR)/%.xml: $(INTERFACES_DIR)/swig/%.i $(SWIG) $(JAVA) $(GENERATE_DEPS)
 	mkdir -p $(GENDIR)
 	$(SWIG) -w401 -c++ -o $@ -xml -I$(TOPDIR)/xbmc -xmllang python $<
 
-codegenerated: $(DOXYGEN) $(SWIG) $(JAVA) $(GENERATED) $(GENERATED_JSON) $(GENERATED_ADDON_JSON)
+codegenerated: $(DOXYGEN) $(SWIG) $(JAVA) $(GENERATED) $(GENERATED_JSON)
 
 $(DOXY_XML_PATH): $(SWIG) $(JAVA)
 	cd $(INTERFACES_DIR)/python; ($(DOXYGEN) Doxyfile > /dev/null) 2>&1 | grep -v " warning: "
