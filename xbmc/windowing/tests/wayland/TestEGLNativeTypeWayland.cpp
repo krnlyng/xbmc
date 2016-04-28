@@ -41,14 +41,15 @@
 
 #include "TmpEnv.h"
 #include "WestonTest.h"
+
+#if defined(HAVE_WAYLAND_XBMC_PROTO)
 #include "XBMCWayland.h"
+#endif
 
 using ::testing::Values;
 using ::testing::WithParamInterface;
 
-namespace xt = xbmc::test;
 namespace xw = xbmc::wayland;
-namespace xtw = xbmc::test::wayland;
 
 class EGLNativeTypeWaylandWestonTest :
   public WestonTest
@@ -190,6 +191,8 @@ TEST_F(ConnectedEGLNativeTypeWaylandWestonTest, GetMostRecentSurface)
 }
 
 #if defined(HAVE_WAYLAND_XBMC_PROTO)
+
+namespace xtw = xbmc::test::wayland;
 
 class AssistedEGLNativeTypeWaylandTest :
   public ConnectedEGLNativeTypeWaylandWestonTest
