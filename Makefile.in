@@ -280,8 +280,8 @@ WAYLAND_TEST_MODULE = xbmc/windowing/tests/wayland/xbmc-wayland-test-extension.s
 $(WAYLAND_TEST_MODULE): force
 	$(MAKE) -C $(@D) $(@F)
 CHECK_EXTENSIONS = $(WAYLAND_TEST_MODULE)
-CHECK_LIBADD=@WAYLAND_TEST_LIBS@
 endif
+CHECK_LIBADD=@WAYLAND_TEST_LIBS@
 endif
 
 ifeq (@USE_SSE4@,1)
