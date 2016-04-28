@@ -31,7 +31,12 @@
 #include "guilib/GraphicContext.h"
 #include "settings/MediaSettings.h"
 #include "settings/AdvancedSettings.h"
+#ifdef HAVE_X11
 #include <va/va_x11.h>
+#endif
+#ifdef HAVE_WAYLAND
+#include <va/va_wayland.h>
+#endif
 #include <va/va_drmcommon.h>
 #include <drm_fourcc.h>
 #include "linux/XTimeUtils.h"
@@ -57,7 +62,9 @@ using namespace VAAPI;
 
 CVAAPIContext *CVAAPIContext::m_context = 0;
 CCriticalSection CVAAPIContext::m_section;
+#ifdef HAVE_X11
 Display *CVAAPIContext::m_X11dpy = 0;
+#endif
 
 CVAAPIContext::CVAAPIContext()
 {
@@ -127,12 +134,22 @@ bool CVAAPIContext::EnsureContext(CVAAPIContext **ctx, CDecoder *decoder)
 
 bool CVAAPIContext::CreateContext()
 {
+#ifdef HAVE_X11
   { CSingleLock lock(g_graphicsContext);
     if (!m_X11dpy)
       m_X11dpy = XOpenDisplay(NULL);
   }
 
   m_display = vaGetDisplay(m_X11dpy);
+#elif defined(HAVE_WAYLAND)
+  struct wl_display *wl_dpy = g_Windowing.GetWaylandDisplay();
+  if (wl_dpy == NULL)
+    return false;
+
+  m_display = vaGetDisplayWl(wl_dpy);
+#else
+#error No VAAPI display available.
+#endif
 
   int major_version, minor_version;
   if (!CheckSuccess(vaInitialize(m_display, &major_version, &minor_version)))
@@ -252,10 +269,14 @@ VADisplay CVAAPIContext::GetDisplay()
   return m_display;
 }
 
+#ifdef HAVE_X11
+
 Display *CVAAPIContext::GetX11Display()
 {
   return m_X11dpy;
 }
+
+#endif
 
 bool CVAAPIContext::IsValidDecoder(CDecoder *decoder)
 {
@@ -1029,7 +1050,9 @@ bool CDecoder::ConfigVAAPI()
   memset(&m_hwContext, 0, sizeof(vaapi_context));
 
   m_vaapiConfig.dpy = m_vaapiConfig.context->GetDisplay();
+#ifdef HAVE_X11
   m_vaapiConfig.x11dsp = m_vaapiConfig.context->GetX11Display();
+#endif
   m_vaapiConfig.attrib = m_vaapiConfig.context->GetAttrib(m_vaapiConfig.profile);
   if ((m_vaapiConfig.attrib.value & VA_RT_FORMAT_YUV420) == 0)
   {
@@ -2423,7 +2446,9 @@ bool COutput::CheckSuccess(VAStatus status)
 
 bool COutput::CreateEGLContext()
 {
+#ifdef HAVE_X11
   m_Display = g_Windowing.GetDisplay();
+#endif
   EGLDisplay eglDisplay = g_Windowing.GetEGLDisplay();
   EGLContext eglMainContext = g_Windowing.GetEGLContext();
   EGLConfig eglMainConfig = g_Windowing.GetEGLConfig();

@@ -123,7 +123,9 @@ struct CVaapiConfig
   VADisplay dpy;
   VAProfile profile;
   VAConfigAttrib attrib;
+#ifdef HAVE_X11
   Display *x11dsp;
+#endif
 };
 
 /**
@@ -331,7 +333,9 @@ protected:
   EGLDisplay m_eglDisplay;
   EGLSurface m_eglSurface;
   EGLContext m_eglContext;
+#ifdef HAVE_X11
   Display *m_Display;
+#endif
   CVaapiDecodedPicture m_currentPicture;
   GLenum m_textureTarget;
   CPostproc *m_pp;
@@ -375,7 +379,9 @@ public:
   static bool EnsureContext(CVAAPIContext **ctx, CDecoder *decoder);
   void Release(CDecoder *decoder);
   VADisplay GetDisplay();
+#ifdef HAVE_X11
   Display* GetX11Display();
+#endif
   bool SupportsProfile(VAProfile profile);
   VAConfigAttrib GetAttrib(VAProfile profile);
   VAConfigID CreateConfig(VAProfile profile, VAConfigAttrib attrib);
@@ -390,7 +396,9 @@ private:
   bool IsValidDecoder(CDecoder *decoder);
   static CVAAPIContext *m_context;
   static CCriticalSection m_section;
+#ifdef HAVE_X11
   static Display *m_X11dpy;
+#endif
   VADisplay m_display;
   int m_refCount;
   int m_attributeCount;
