@@ -427,7 +427,7 @@ DIRS= $(BIN_DIRS) $(EC_DIRS) $(DVDPCODECS_DIRS) \
 	$(LIB_DIRS) $(LIBADDON_DIRS) $(SKIN_DIRS) xbmc/platform xbmc/platform/darwin/osx
 
 $(NWAOBJSXBMC) $(DIRECTORY_ARCHIVES) $(MAINOBJS): force
-	@$(MAKE) $(if $(V),,-s) -C $(@D)
+	@$(MAKE) $(if $(V),,-s) -C $(@D) $(@F)
 
 # Binary Addon bindings
 include xbmc/addons/addon-bindings.mk
@@ -619,7 +619,7 @@ $(GTEST_DIR)/Makefile: force
 	$(MAKE) CXXFLAGS="$(CXXFLAGS) -DGTEST_USE_OWN_TR1_TUPLE=1" -C $(GTEST_DIR)
 
 $(CHECK_LIBS): force
-	@$(MAKE) CXXFLAGS="$(CXXFLAGS) -DGTEST_USE_OWN_TR1_TUPLE=1" $(if $(V),,-s) -C $(@D)
+	@$(MAKE) CXXFLAGS="$(CXXFLAGS) -DGTEST_USE_OWN_TR1_TUPLE=1" $(if $(V),,-s) -C $(@D) $(@F)
 
 @APP_NAME_LC@-test: $(CHECK_LIBS) $(OBJSXBMC) $(DYNOBJSXBMC) $(NWAOBJSXBMC) $(GTEST_LIBS)
 ifeq ($(findstring osx,@ARCH@), osx)
