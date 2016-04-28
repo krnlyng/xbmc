@@ -6,8 +6,8 @@ GITVERFILE := ../VERSION
 GIT = $(notdir $(shell which git))
 
 .PHONY: GitRevision $(FILEPATH)/.GitRevision
-all: $(FILEPATH)/CompileInfo.cpp GitRevision
-GitRevision: $(FILEPATH)/.GitRevision
+all: $(FILEPATH)/CompileInfo.cpp $(FILEPATH)/GitRevision
+$(FILEPATH)/GitRevision: $(FILEPATH)/.GitRevision
 
 $(FILEPATH)/.GitRevision:
 	@if test -f $(GITVERFILE); then \
