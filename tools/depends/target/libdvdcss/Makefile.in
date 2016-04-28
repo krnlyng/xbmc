@@ -44,6 +44,7 @@ $(PLATFORM): $(TARBALLS_LOCATION)/$(ARCHIVE) $(DEPS)
 	cd $(PLATFORM); $(AUTORECONF) -vif && ac_cv_path_GIT= ./configure $(config)
 
 $(PLATFORM)/.libs/$(LIBNAME).a: $(PLATFORM)
+	[ -f $(PLATFORM)/ChangeLog ] || touch $(PLATFORM)/ChangeLog
 	[ -d $(PLATFORM)/.libs ] && [ ! -f $@ ] && $(MAKE) -C $(PLATFORM) clean || :
 	$(MAKE) -C $(PLATFORM)
 
