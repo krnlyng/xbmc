@@ -62,6 +62,8 @@
 #define WAYLAND_VERSION_NUMBER ((WAYLAND_VERSION_MAJOR << 16) | (WAYLAND_VERSION_MINOR << 8) | (WAYLAND_VERSION_MICRO))
 #define WAYLAND_VERSION_CHECK(major, minor, micro) ((major << 16) | (minor << 8) | (micro))
 
+#if defined(HAVE_WAYLAND_XBMC_PROTO)
+
 namespace xw = xbmc::wayland;
 namespace xtw = xbmc::test::wayland;
 namespace xwe = xbmc::wayland::events;
@@ -577,3 +579,5 @@ typedef ::testing::Types<SingleThreadedEventQueue,
 INSTANTIATE_TYPED_TEST_CASE_P(EventQueues,
                               InputEventQueueWestonTest,
                               EventQueueTypes);
+
+#endif
