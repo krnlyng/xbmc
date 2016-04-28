@@ -556,7 +556,7 @@ xt::Process::~Process()
     ss << "Failed to terminate "
        << m_pid
        << std::endl;
-    ss << processStatusMessages;
+    ss << processStatusMessages.str();
     throw std::runtime_error(ss.str());
   }
 }
