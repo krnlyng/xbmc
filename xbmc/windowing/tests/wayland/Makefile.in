@@ -45,7 +45,7 @@ xbmc_wayland_test_client_protocol.h: $(WAYLAND_TEST_MODULE_PROTOCOL)
 
 ifeq (@USE_WAYLAND_TEST_EXTENSION@,1)
 xbmc-wayland-test-extension.so: $(WAYLAND_TEST_MODULE_PROTOCOL_SRCS:.c=.o) $(WAYLAND_TEST_MODULE_SRCS:.cpp=.o)
-	$(SILENT_LD) $(CXX) $(CXXFLAGS) $(LDFLAGS) $(WAYLAND_TEST_LIBS) -shared -o $@ $+ -rdynamic
+	$(SILENT_LD) $(CXX) $(CXXFLAGS) $(LDFLAGS) @WAYLAND_TEST_LIBS@ -shared -o $@ $+ -rdynamic
 endif
 
 endif
