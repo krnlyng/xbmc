@@ -532,6 +532,15 @@ EGLConfig CWinSystemEGL::GetEGLConfig()
   return m_config;
 }
 
+#ifdef HAVE_WAYLAND
+
+struct wl_display *CWinSystemEGL::GetWaylandDisplay()
+{
+  return m_egl->GetWaylandDisplay();
+}
+
+#endif
+
 bool CWinSystemEGL::ClampToGUIDisplayLimits(int &width, int &height)
 {
   width = width > m_nWidth ? m_nWidth : width;

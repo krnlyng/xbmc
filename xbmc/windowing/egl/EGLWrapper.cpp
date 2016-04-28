@@ -164,6 +164,23 @@ void CEGLWrapper::DestroyNativeWindow()
     m_nativeTypes->DestroyNativeWindow();
 }
 
+#ifdef HAVE_WAYLAND
+
+struct wl_display *CEGLWrapper::GetWaylandDisplay()
+{
+  auto *wl = dynamic_cast<CEGLNativeTypeWayland *>(m_nativeTypes);
+  if (!wl)
+    return NULL;
+
+  EGLNativeDisplayType *nativeDisplay = NULL;
+  if (!m_nativeTypes->GetNativeDisplay((XBNativeDisplayType**)&nativeDisplay))
+    return NULL;
+
+  return *nativeDisplay;
+}
+
+#endif
+
 bool CEGLWrapper::SetNativeResolution(RESOLUTION_INFO& res)
 {
   if (!m_nativeTypes)

@@ -38,6 +38,10 @@ public:
   void DestroyNativeDisplay();
   void DestroyNativeWindow();
 
+#ifdef HAVE_WAYLAND
+  struct wl_display *GetWaylandDisplay();
+#endif
+
   bool SetNativeResolution(RESOLUTION_INFO& res);
   bool ProbeResolutions(std::vector<RESOLUTION_INFO> &resolutions);
   bool ShowWindow(bool show);

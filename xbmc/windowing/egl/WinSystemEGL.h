@@ -65,6 +65,11 @@ public:
 
   EGLDisplay    GetEGLDisplay();
   EGLContext    GetEGLContext();
+
+#ifdef HAVE_WAYLAND
+  struct wl_display *GetWaylandDisplay();
+#endif
+
 protected:
   virtual void  PresentRenderImpl(bool rendered);
   virtual void  SetVSyncImpl(bool enable);
