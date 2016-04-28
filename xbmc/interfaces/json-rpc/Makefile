@@ -35,8 +35,14 @@ ifeq ($(JSON_BUILDER),)
 endif
 endif
 
-$(GENERATED_JSON): $(JSON_SRC)
+$(JSON_BUILDER):
+#build json builder - ".." because makefile is in the parent dir of "bin"
+	$(MAKE) -C $(abspath $(@D)/..)
+
+$(GENERATED_JSON): $(JSON_SRC) $(JSON_BUILDER)
 	$(JSON_BUILDER) $(JSON_SRC)
+
+$(OBJS): $(GENERATED_JSON)
 
 .PHONY: $(notdir $(GENERATED_ADDON_JSON))
 $(notdir $(GENERATED_ADDON_JSON)): $(GENERATED_ADDON_JSON)

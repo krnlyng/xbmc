@@ -31,7 +31,7 @@ debug: DEBUG=--enable-debug=yes
 debug: $(SOURCE)/lib$(APP_NAME).so
 
 $(SOURCE)/lib$(APP_NAME).so:
-	cd $(SOURCE); BOOTSTRAP_FROM_DEPENDS=yes ./bootstrap
+	cd $(SOURCE); ./bootstrap
 	cd $(SOURCE); $(CONFIGURE)
 
 ../../Makefile.include:
