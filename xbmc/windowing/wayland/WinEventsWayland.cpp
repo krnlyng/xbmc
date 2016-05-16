@@ -98,6 +98,11 @@ size_t CWinEventsWayland::GetQueueSize()
   return 0;
 }
 
+void CWinEventsWayland::MessagePush(XBMC_Event *ev)
+{
+  g_application.OnEvent(*ev);
+}
+
 void CWinEventsWayland::SetEventQueueStrategy(xwe::IEventQueueStrategy &strategy)
 {
   g_eventLoop.reset(new xwe::Loop(g_listener, strategy));

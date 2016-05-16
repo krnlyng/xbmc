@@ -647,7 +647,7 @@ case $host in
      use_neon=yes
      use_gles=yes
      use_gl=no
-     use_wayland=no
+     use_wayland=yes
      USE_STATIC_FFMPEG=1
      ;;
   arm*-*linux-android*)
@@ -1194,6 +1194,12 @@ PKG_CHECK_MODULES([FREETYPE2],  [freetype2],
   AC_MSG_ERROR($missing_library))
 PKG_CHECK_MODULES([TAGLIB],  [taglib >= 1.8],
   [INCLUDES="$INCLUDES $TAGLIB_CFLAGS"; LIBS="$LIBS $TAGLIB_LIBS"],
+  AC_MSG_ERROR($missing_library))
+PKG_CHECK_MODULES([GLIB2],  [glib-2.0 >= 2.38.2],
+  [INCLUDES="$INCLUDES $GLIB2_CFLAGS"; LIBS="$LIBS $GLIB2_LIBS"],
+  AC_MSG_ERROR($missing_library))
+PKG_CHECK_MODULES([AUDIORESOURCE],  [audioresource >= 1.0.0],
+  [INCLUDES="$INCLUDES $AUDIORESOURCE_CFLAGS"; LIBS="$LIBS $AUDIORESOURCE_LIBS"],
   AC_MSG_ERROR($missing_library))
 
 if test "$use_optical_drive" = "yes"; then

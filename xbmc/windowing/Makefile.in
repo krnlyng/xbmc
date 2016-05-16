@@ -9,6 +9,7 @@ ifeq (@USE_WAYLAND@,1)
 SRCS += wayland/EventLoop.cpp \
         wayland/Seat.cpp \
         wayland/Pointer.cpp \
+        wayland/Touch.cpp \
         wayland/PointerProcessor.cpp \
         wayland/InputFactory.cpp \
         wayland/Keyboard.cpp \

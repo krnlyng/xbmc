@@ -38,7 +38,7 @@
 #include <va/va_wayland.h>
 #endif
 #include <va/va_drmcommon.h>
-#include <drm_fourcc.h>
+#include <drm/drm_fourcc.h>
 #include "linux/XTimeUtils.h"
 #include "linux/XMemUtils.h"
 

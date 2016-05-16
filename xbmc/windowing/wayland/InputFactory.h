@@ -23,6 +23,7 @@
 #include "CursorManager.h"
 #include "Seat.h"
 #include "Pointer.h"
+#include "Touch.h"
 #include "PointerProcessor.h"
 #include "Keyboard.h"
 #include "KeyboardProcessor.h"
@@ -34,6 +35,7 @@ class IDllXKBCommon;
 
 struct wl_keyboard;
 struct wl_pointer;
+struct wl_touch;
 struct wl_seat;
 struct wl_surface;
 
@@ -65,9 +67,11 @@ private:
                  double surfaceY);
 
   bool InsertPointer(struct wl_pointer *);
+  bool InsertTouch(struct wl_touch *);
   bool InsertKeyboard(struct wl_keyboard *);
 
   void RemovePointer();
+  void RemoveTouch();
   void RemoveKeyboard();
 
   IDllWaylandClient &m_clientLibrary;
@@ -78,6 +82,7 @@ private:
 
   std::unique_ptr<wayland::Seat> m_seat;
   std::unique_ptr<wayland::Pointer> m_pointer;
+  std::unique_ptr<wayland::Touch> m_touch;
   std::unique_ptr<wayland::Keyboard> m_keyboard;
 };
 }

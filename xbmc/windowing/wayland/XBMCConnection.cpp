@@ -48,6 +48,8 @@
 #include "Wayland11EventQueueStrategy.h"
 #include "Wayland12EventQueueStrategy.h"
 
+int g_current_width, g_current_height;
+
 namespace xbmc
 {
 namespace wayland
@@ -680,8 +682,9 @@ namespace
 void ResolutionInfoForMode(const xw::Output::ModeGeometry &mode,
                            RESOLUTION_INFO &res)
 {
-  res.iWidth = mode.width;
-  res.iHeight = mode.height;
+  // swap x, y
+  res.iWidth = mode.height;
+  res.iHeight = mode.width;
   
   /* The refresh rate is given as in mHz as integer so we need
    * to divide by 1000.0f to get a floating point value in Hz */
@@ -705,8 +708,10 @@ xw::XBMCConnection::CurrentResolution(RESOLUTION_INFO &res) const
 {
   /* Supporting only the first output device at the moment */
   const xw::Output::ModeGeometry &current(priv->Output().CurrentMode());
-  
   ResolutionInfoForMode(current, res);
+
+  g_current_width = res.iWidth;
+  g_current_height = res.iHeight;
 }
 
 void

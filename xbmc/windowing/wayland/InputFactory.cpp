@@ -63,6 +63,16 @@ bool xbmc::InputFactory::InsertPointer(struct wl_pointer *p)
   return true;
 }
 
+bool xbmc::InputFactory::InsertTouch(struct wl_touch *t)
+{
+  if (m_touch.get())
+    return false;
+
+  m_touch.reset(new xw::Touch(m_clientLibrary,
+                                  t));
+  return true;
+}
+
 bool xbmc::InputFactory::InsertKeyboard(struct wl_keyboard *k)
 {
   if (m_keyboard.get())

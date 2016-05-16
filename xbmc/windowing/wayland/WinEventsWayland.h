@@ -48,6 +48,7 @@ public:
   CWinEventsWayland();
   bool MessagePump();
   size_t GetQueueSize();
+  void MessagePush(XBMC_Event *ev);
   static void RefreshDevices();
   static bool IsRemoteLowBattery();
 

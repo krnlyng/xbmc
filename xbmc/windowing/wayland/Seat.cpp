@@ -74,6 +74,20 @@ void xw::Seat::HandleCapabilities(enum wl_seat_capability cap)
   enum wl_seat_capability lostCaps =
     static_cast<enum wl_seat_capability>(m_currentCapabilities & ~cap);
 
+  if (newCaps & WL_SEAT_CAPABILITY_TOUCH)
+  {
+    struct wl_touch *touch =
+      protocol::CreateWaylandObject<struct wl_touch *,
+                                    struct wl_seat *>(m_clientLibrary,
+                                                      m_seat,
+                                                      m_clientLibrary.Get_wl_touch_interface());
+    protocol::CallMethodOnWaylandObject(m_clientLibrary,
+                                        m_seat,
+                                        WL_SEAT_GET_TOUCH,
+                                        touch);
+    m_input.InsertTouch(touch);
+  }
+
   if (newCaps & WL_SEAT_CAPABILITY_POINTER)
   {
     struct wl_pointer *pointer =

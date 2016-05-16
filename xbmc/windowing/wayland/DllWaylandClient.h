@@ -41,6 +41,7 @@ struct wl_shell_surface;
 struct wl_surface;
 struct wl_seat;
 struct wl_pointer;
+struct wl_touch;
 struct wl_keyboard;
 struct wl_output;
 struct wl_region;
@@ -54,6 +55,7 @@ extern const struct wl_interface wl_shell_surface_interface;
 extern const struct wl_interface wl_surface_interface;
 extern const struct wl_interface wl_seat_interface;
 extern const struct wl_interface wl_pointer_interface;
+extern const struct wl_interface wl_touch_interface;
 extern const struct wl_interface wl_keyboard_interface;
 extern const struct wl_interface wl_output_interface;
 extern const struct wl_interface wl_region_interface;
@@ -77,6 +79,7 @@ public:
   virtual struct wl_interface ** Get_wl_surface_interface() = 0;
   virtual struct wl_interface ** Get_wl_seat_interface() = 0;
   virtual struct wl_interface ** Get_wl_pointer_interface() = 0;
+  virtual struct wl_interface ** Get_wl_touch_interface() = 0;
   virtual struct wl_interface ** Get_wl_keyboard_interface() = 0;
   virtual struct wl_interface ** Get_wl_output_interface() = 0;
   virtual struct wl_interface ** Get_wl_region_interface() = 0;
@@ -115,6 +118,7 @@ class DllWaylandClient : public DllDynamic, public IDllWaylandClient
   DEFINE_GLOBAL_PTR(struct wl_interface *, wl_surface_interface);
   DEFINE_GLOBAL_PTR(struct wl_interface *, wl_seat_interface);
   DEFINE_GLOBAL_PTR(struct wl_interface *, wl_pointer_interface);
+  DEFINE_GLOBAL_PTR(struct wl_interface *, wl_touch_interface);
   DEFINE_GLOBAL_PTR(struct wl_interface *, wl_keyboard_interface);
   DEFINE_GLOBAL_PTR(struct wl_interface *, wl_output_interface);
   DEFINE_GLOBAL_PTR(struct wl_interface *, wl_region_interface);
@@ -154,6 +158,7 @@ class DllWaylandClient : public DllDynamic, public IDllWaylandClient
     RESOLVE_METHOD(wl_surface_interface)
     RESOLVE_METHOD(wl_seat_interface)
     RESOLVE_METHOD(wl_pointer_interface)
+    RESOLVE_METHOD(wl_touch_interface)
     RESOLVE_METHOD(wl_keyboard_interface)
     RESOLVE_METHOD(wl_output_interface)
     RESOLVE_METHOD(wl_region_interface)

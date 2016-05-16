@@ -34,6 +34,8 @@ typedef struct wl_display * EGLNativeDisplayType;
 
 struct RESOLUTION_INFO;
 
+extern int g_current_width, g_current_height;
+
 namespace xbmc
 {
 namespace wayland

@@ -26,6 +26,18 @@
 #include "guilib/LocalizeStrings.h"
 #include "Application.h"
 
+#include <audioresource.h>
+#include <glib.h>
+
+static audioresource_t *l_audioresource = NULL;
+static int l_audioresource_acquired = 0;
+
+void on_audioresource_acquired(audioresource_t *audioresource, bool acquired, void *user_data)
+{
+    printf("audioresource acquired: %d\n", acquired);
+    l_audioresource_acquired = acquired;
+}
+
 static const char *ContextStateToString(pa_context_state s)
 {
   switch (s)
@@ -496,6 +508,11 @@ CAESinkPULSE::CAESinkPULSE()
 CAESinkPULSE::~CAESinkPULSE()
 {
   Deinitialize();
+  if(l_audioresource)
+  {
+    audioresource_release(l_audioresource);
+    audioresource_free(l_audioresource);
+  }
 }
 
 bool CAESinkPULSE::Initialize(AEAudioFormat &format, std::string &device)
@@ -504,6 +521,18 @@ bool CAESinkPULSE::Initialize(AEAudioFormat &format, std::string &device)
     CSingleLock lock(m_sec);
     m_IsAllocated = false;
   }
+
+  l_audioresource = audioresource_init(AUDIO_RESOURCE_MEDIA, on_audioresource_acquired, NULL);
+
+  audioresource_acquire(l_audioresource);
+
+  printf("Waiting for audioresource...\n");
+  while(!l_audioresource_acquired)
+  {
+    g_main_context_iteration(NULL, false);
+  }
+  printf("audioresource intialized\n");
+
   m_passthrough = false;
   m_BytesPerSecond = 0;
   m_BufferSize = 0;
@@ -760,6 +789,7 @@ bool CAESinkPULSE::Initialize(AEAudioFormat &format, std::string &device)
 void CAESinkPULSE::Deinitialize()
 {
   CSingleLock lock(m_sec);
+
   m_IsAllocated = false;
   m_passthrough = false;
   m_periodSize = 0;

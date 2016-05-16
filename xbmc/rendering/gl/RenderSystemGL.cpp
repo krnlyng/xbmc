@@ -265,6 +265,7 @@ bool CRenderSystemGL::ResetRenderSystem(int width, int height, bool fullScreen, 
 
   CalculateMaxTexturesize();
 
+//  CRect rect( 0, 0, width, height );
   CRect rect( 0, 0, width, height );
   SetViewPort( rect );
 
@@ -562,7 +563,11 @@ void CRenderSystemGL::SetCameraPosition(const CPoint &camera, int screenWidth, i
   glMatrixModview.Load();
 
   glMatrixProject->LoadIdentity();
+  glMatrixProject->Translatef(-0.5, -0.5, 0.0);
+  glMatrixProject->Rotatef(90.f * M_PI / 180.f, 0.f, 0.f, 1.f);
+  glMatrixProject->Translatef(0.5, 0.5, 0.0);
   glMatrixProject->Frustum( (-w - offset.x)*0.5f, (w - offset.x)*0.5f, (-h + offset.y)*0.5f, (h + offset.y)*0.5f, h, 100*h);
+  glMatrixProject->Translatef(/*-w*/0, -h, 0.f);
   glMatrixProject.Load();
 }
 
@@ -724,17 +729,20 @@ void CRenderSystemGL::GetViewPort(CRect& viewPort)
   viewPort.y2 = viewPort.y1 + m_viewPort[3];
 }
 
-void CRenderSystemGL::SetViewPort(CRect& viewPort)
+void CRenderSystemGL::SetViewPort(CRect& viewPortorig)
 {
   if (!m_bRenderCreated)
     return;
 
-  glScissor((GLint) viewPort.x1, (GLint) (m_height - viewPort.y1 - viewPort.Height()), (GLsizei) viewPort.Width(), (GLsizei) viewPort.Height());
-  glViewport((GLint) viewPort.x1, (GLint) (m_height - viewPort.y1 - viewPort.Height()), (GLsizei) viewPort.Width(), (GLsizei) viewPort.Height());
-  m_viewPort[0] = viewPort.x1;
-  m_viewPort[1] = m_height - viewPort.y1 - viewPort.Height();
-  m_viewPort[2] = viewPort.Width();
-  m_viewPort[3] = viewPort.Height();
+  CRect viewPort(viewPortorig.y1, viewPortorig.x1, viewPortorig.Height(), viewPortorig.Width());
+
+  glScissor((GLint) viewPort.x1, (GLint) (m_width - viewPort.y1 - viewPort.Height()), (GLsizei) viewPort.Width(), (GLsizei) viewPort.Height());
+  glViewport((GLint) viewPort.x1, (GLint) (m_width - viewPort.y1 - viewPort.Height()), (GLsizei) viewPort.Width(), (GLsizei) viewPort.Height());
+
+  m_viewPort[0] = viewPortorig.x1;
+  m_viewPort[1] = m_height - viewPortorig.y1 - viewPortorig.Height();
+  m_viewPort[2] = viewPortorig.Width();
+  m_viewPort[3] = viewPortorig.Height();
 }
 
 #ifdef HAS_GLES
@@ -761,15 +769,19 @@ CRect CRenderSystemGL::ClipRectToScissorRect(const CRect &rect)
 }
 #endif
 
-void CRenderSystemGL::SetScissors(const CRect &rect)
+void CRenderSystemGL::SetScissors(const CRect &rectorig)
+
 {
   if (!m_bRenderCreated)
     return;
+
+  CRect rect(rectorig.y1, rectorig.x1, rectorig.Height(), rectorig.Width());
+
   GLint x1 = MathUtils::round_int(rect.x1);
   GLint y1 = MathUtils::round_int(rect.y1);
   GLint x2 = MathUtils::round_int(rect.x2);
   GLint y2 = MathUtils::round_int(rect.y2);
-  glScissor(x1, m_height - y2, x2-x1, y2-y1);
+  glScissor(x1, m_width - y2, x2-x1, y2-y1);
 }
 
 void CRenderSystemGL::ResetScissors()

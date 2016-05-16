@@ -34,6 +34,7 @@ public:
   virtual ~IInputReceiver() {}
 
   virtual bool InsertPointer(struct wl_pointer *pointer) = 0;
+  virtual bool InsertTouch(struct wl_touch *touch) = 0;
   virtual bool InsertKeyboard(struct wl_keyboard *keyboard) = 0;
 
   virtual void RemovePointer() = 0;

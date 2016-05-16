@@ -234,8 +234,8 @@ bool CEGLNativeTypeWayland::CreateNativeWindow()
                                               injector,
                                               priv->m_connection->GetCompositor(),
                                               priv->m_connection->GetShell(),
-                                              info.iScreenWidth,
-                                              info.iScreenHeight));
+                                              info.iScreenHeight,
+                                              info.iScreenWidth));
   }
   catch (const std::runtime_error &err)
   {
@@ -314,7 +314,7 @@ bool CEGLNativeTypeWayland::GetNativeResolution(RESOLUTION_INFO *res) const
 bool CEGLNativeTypeWayland::SetNativeResolution(const RESOLUTION_INFO &res)
 {
 #if defined(HAVE_WAYLAND)
-  priv->m_surface->Resize(res.iScreenWidth, res.iScreenHeight);
+  priv->m_surface->Resize(res.iScreenHeight, res.iScreenWidth);
   return true;
 #else
   return false;
