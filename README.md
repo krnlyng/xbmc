@@ -1,4 +1,4 @@
-# Kodi fork
+# Kodi fork by Max Kellerman
 
 This is my personal Kodi fork.  Improvements compared to
 [mainline Kodi](https://github.com/xbmc/xbmc):
