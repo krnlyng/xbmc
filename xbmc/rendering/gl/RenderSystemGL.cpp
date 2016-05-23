@@ -564,10 +564,10 @@ void CRenderSystemGL::SetCameraPosition(const CPoint &camera, int screenWidth, i
 
   glMatrixProject->LoadIdentity();
   glMatrixProject->Translatef(-0.5, -0.5, 0.0);
-  glMatrixProject->Rotatef(90.f * M_PI / 180.f, 0.f, 0.f, 1.f);
+  glMatrixProject->Rotatef(270.f * M_PI / 180.f, 0.f, 0.f, 1.f);
   glMatrixProject->Translatef(0.5, 0.5, 0.0);
   glMatrixProject->Frustum( (-w - offset.x)*0.5f, (w - offset.x)*0.5f, (-h + offset.y)*0.5f, (h + offset.y)*0.5f, h, 100*h);
-  glMatrixProject->Translatef(/*-w*/0, -h, 0.f);
+  glMatrixProject->Translatef(-w, /*-h*/0, 0.f);
   glMatrixProject.Load();
 }
 

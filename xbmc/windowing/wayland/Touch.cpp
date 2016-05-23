@@ -192,7 +192,7 @@ void xw::Touch::HandleCancleCallback(void *data,
 
 std::pair<int, int> xw::Touch::get_rotated_xy(double x, double y)
 {
-    auto r = std::make_pair<int, int>(m_width - y, x);
+    auto r = std::make_pair<int, int>(y, m_height - x);
     return r;
 }
 
