@@ -666,6 +666,9 @@ const RESOLUTION_INFO CGraphicContext::GetResInfo() const
   return GetResInfo(m_Resolution);
 }
 
+// SailfishOS rotation hack
+static const float degrees_to_radians = 0.01745329252f;
+
 void CGraphicContext::GetGUIScaling(const RESOLUTION_INFO &res, float &scaleX, float &scaleY, TransformMatrix *matrix /* = NULL */)
 {
   if (m_Resolution != RES_INVALID)
@@ -697,7 +700,18 @@ void CGraphicContext::GetGUIScaling(const RESOLUTION_INFO &res, float &scaleX, f
     {
       TransformMatrix guiScaler = TransformMatrix::CreateScaler(fToWidth / fFromWidth, fToHeight / fFromHeight, fToHeight / fFromHeight);
       TransformMatrix guiOffset = TransformMatrix::CreateTranslation(fToPosX, fToPosY);
-      *matrix = guiOffset * guiScaler;
+
+      // SailfishOS rotation hack
+      TransformMatrix guiRotation;
+      TransformMatrix guiRotationTrans;
+      guiRotation.Reset();
+
+      guiRotation.SetZRotation(270 * degrees_to_radians, 0, 0, fToHeight / fToWidth);
+      guiRotationTrans.SetTranslation(0, fToHeight, 0);
+
+      *matrix = guiRotationTrans * guiOffset * guiRotation * guiScaler;
+
+      scaleX = scaleY = 1.f;
     }
   }
   else

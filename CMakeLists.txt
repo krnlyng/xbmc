@@ -305,7 +305,9 @@ core_add_subdirs_from_filelist(${CMAKE_SOURCE_DIR}/cmake/treedata/common/*.txt
 core_add_optional_subdirs_from_filelist(${CMAKE_SOURCE_DIR}/cmake/treedata/optional/common/*.txt
                                         ${CMAKE_SOURCE_DIR}/cmake/treedata/optional/${CORE_SYSTEM_NAME}/*.txt)
 
-target_link_libraries(lib${APP_NAME_LC} PUBLIC ${core_DEPENDS} ${SYSTEM_LDFLAGS} ${DEPLIBS} ${CMAKE_DL_LIBS})
+pkg_check_modules(AUDIORESOURCE REQUIRED IMPORTED_TARGET audioresource)
+pkg_check_modules(GLIB2 REQUIRED IMPORTED_TARGET glib-2.0)
+target_link_libraries(lib${APP_NAME_LC} PUBLIC ${core_DEPENDS} ${SYSTEM_LDFLAGS} ${DEPLIBS} ${CMAKE_DL_LIBS} PkgConfig::AUDIORESOURCE PkgConfig::GLIB2)
 set_target_properties(lib${APP_NAME_LC} PROPERTIES PROJECT_LABEL "xbmc")
 source_group_by_folder(lib${APP_NAME_LC} RELATIVE ${CMAKE_SOURCE_DIR}/xbmc)
 if(WIN32)
@@ -326,6 +328,7 @@ else()
 endif()
 add_dependencies(${APP_NAME_LC} ${APP_NAME_LC}-libraries export-files pack-skins)
 whole_archive(_MAIN_LIBRARIES ${core_DEPENDS})
+find_package(PkgConfig REQUIRED)
 target_link_libraries(${APP_NAME_LC} ${_MAIN_LIBRARIES} lib${APP_NAME_LC} ${DEPLIBS})
 unset(_MAIN_LIBRARIES)
 

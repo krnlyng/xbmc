@@ -844,8 +844,8 @@ CVideoPlayerVideo::EOutputState CVideoPlayerVideo::OutputPicture(const VideoPict
   }
 
   int sorient = m_processInfo.GetVideoSettings().m_Orientation;
-  int orientation = sorient != 0 ? (sorient + m_hints.orientation) % 360
-                                 : m_hints.orientation;
+  int orientation = sorient != 0 ? (sorient + 270 + m_hints.orientation) % 360
+                                 : (m_hints.orientation + 270) % 360;
 
   if (!m_renderManager.Configure(*pPicture,
                                 static_cast<float>(config_framerate),

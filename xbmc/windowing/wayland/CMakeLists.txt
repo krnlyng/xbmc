@@ -25,7 +25,8 @@ set(SOURCES Connection.cpp
             WinEventsWayland.cpp
             WinSystemWayland.cpp
             WinSystemWaylandEGLContext.cpp
-            XkbcommonKeymap.cpp)
+            XkbcommonKeymap.cpp
+            qt_surface_extension.cpp)
 
 set(HEADERS Connection.h
             OptionalsReg.h
@@ -49,7 +50,8 @@ set(HEADERS Connection.h
             WinEventsWayland.h
             WinSystemWayland.h
             WinSystemWaylandEGLContext.h
-            XkbcommonKeymap.h)
+            XkbcommonKeymap.h
+            qt_surface_extension.hpp)
 
 if(OPENGL_FOUND)
   list(APPEND SOURCES WinSystemWaylandEGLContextGL.cpp)

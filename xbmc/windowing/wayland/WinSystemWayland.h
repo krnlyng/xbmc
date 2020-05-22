@@ -33,6 +33,8 @@
 #include "WindowDecorationHandler.h"
 #include "windowing/WinSystem.h"
 
+#include "qt_surface_extension.hpp"
+
 class IDispResource;
 
 namespace KODI
@@ -193,6 +195,8 @@ private:
   wayland::compositor_t m_compositor;
   wayland::shm_t m_shm;
   wayland::presentation_t m_presentation;
+  wayland::qt_surface_extension_t m_surface_extension;
+  wayland::qt_extended_surface_t m_extended_surface;
 
   std::unique_ptr<IShellSurface> m_shellSurface;
 

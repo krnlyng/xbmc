@@ -196,6 +196,7 @@ bool CWinSystemWayland::InitWindowSystem()
   m_registry->RequestSingleton(m_compositor, 1, 4);
   m_registry->RequestSingleton(m_shm, 1, 1);
   m_registry->RequestSingleton(m_presentation, 1, 1, false);
+  m_registry->RequestSingleton(m_surface_extension, 2, 2, true);
   // version 2 adds done() -> required
   // version 3 adds destructor -> optional
   m_registry->Request<wayland::output_t>(2, 3, std::bind(&CWinSystemWayland::OnOutputAdded, this, _1, _2), std::bind(&CWinSystemWayland::OnOutputRemoved, this, _1));
@@ -232,6 +233,7 @@ bool CWinSystemWayland::InitWindowSystem()
 bool CWinSystemWayland::DestroyWindowSystem()
 {
   DestroyWindow();
+#if 0 // HACK: something is broken and causes a crash on exit
   // wl_display_disconnect frees all proxy objects, so we have to make sure
   // all stuff is gone on the C++ side before that
   m_cursorSurface = wayland::surface_t{};
@@ -251,6 +253,7 @@ bool CWinSystemWayland::DestroyWindowSystem()
   }
   m_registry.reset();
   m_connection.reset();
+#endif
 
   CGenericTouchInputHandler::GetInstance().UnregisterHandler();
 
@@ -295,6 +298,12 @@ bool CWinSystemWayland::CreateNewWindow(const std::string& name,
     {
       CLog::Log(LOGWARNING, "Leaving output that was not configured yet, ignoring");
     }
+  };
+
+  m_extended_surface = m_surface_extension.get_extended_surface(m_surface);
+
+  m_extended_surface.on_close() = [this]() {
+      this->OnWindowClose();
   };
 
   m_windowDecorator.reset(new CWindowDecorator(*this, *m_connection, m_surface));
@@ -864,7 +873,8 @@ void CWinSystemWayland::SetResolutionInternal(CSizeInt size, std::int32_t scale,
       {
         XBMC_Event msg{XBMC_MODECHANGE};
         msg.mode.res = RES_WINDOW;
-        SetWindowResolution(sizes.bufferSize.Width(), sizes.bufferSize.Height());
+//        SetWindowResolution(sizes.bufferSize.Width(), sizes.bufferSize.Height());
+        SetWindowResolution(sizes.bufferSize.Height(), sizes.bufferSize.Width());
         // FIXME
         dynamic_cast<CWinEventsWayland&>(*m_winEvents).MessagePush(&msg);
         m_waitingForApply = true;
@@ -873,7 +883,8 @@ void CWinSystemWayland::SetResolutionInternal(CSizeInt size, std::int32_t scale,
       else
       {
         XBMC_Event msg{XBMC_VIDEORESIZE};
-        msg.resize = {sizes.bufferSize.Width(), sizes.bufferSize.Height()};
+//        msg.resize = {sizes.bufferSize.Width(), sizes.bufferSize.Height()};
+        msg.resize = {sizes.bufferSize.Height(), sizes.bufferSize.Width()};
         // FIXME
         dynamic_cast<CWinEventsWayland&>(*m_winEvents).MessagePush(&msg);
         m_waitingForApply = true;

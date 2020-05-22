@@ -415,10 +415,10 @@ void CBaseRenderer::SetViewMode(int viewMode)
            (is43 && (CServiceBroker::GetSettingsComponent()->GetSettings()->GetInt(CSettings::SETTING_VIDEOPLAYER_STRETCH43) == ViewModeStretch16x9 ||
                      CServiceBroker::GetSettingsComponent()->GetSettings()->GetInt(CSettings::SETTING_VIDEOPLAYER_STRETCH43) == ViewModeStretch16x9Nonlin)))
   { // stretch image to 16:9 ratio
-    CDisplaySettings::GetInstance().SetZoomAmount(1.0);
+    CDisplaySettings::GetInstance().SetZoomAmount(screenHeight / screenWidth);
     // stretch to the limits of the 16:9 screen.
     // incorrect behaviour, but it's what the users want, so...
-    CDisplaySettings::GetInstance().SetPixelRatio((screenWidth / screenHeight) * info.fPixelRatio / sourceFrameRatio);
+    CDisplaySettings::GetInstance().SetPixelRatio((screenHeight / screenWidth) * info.fPixelRatio / sourceFrameRatio);
     bool nonlin = (is43 && CServiceBroker::GetSettingsComponent()->GetSettings()->GetInt(CSettings::SETTING_VIDEOPLAYER_STRETCH43) == ViewModeStretch16x9Nonlin) ||
                   m_videoSettings.m_ViewMode == ViewModeStretch16x9Nonlin;
     CDisplaySettings::GetInstance().SetNonLinearStretched(nonlin);
