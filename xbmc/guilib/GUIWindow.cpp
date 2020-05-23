@@ -493,7 +493,8 @@ EVENT_RESULT CGUIWindow::OnMouseAction(const CAction &action)
   CServiceBroker::GetWinSystem()->GetGfxContext().InvertFinalCoords(mousePoint.x, mousePoint.y);
 
   // create the mouse event
-  CMouseEvent event(action.GetID(), action.GetHoldTime(), action.GetAmount(2), action.GetAmount(3));
+  // hack
+  CMouseEvent event(action.GetID(), action.GetHoldTime(), action.GetAmount(3), action.GetAmount(2));
   if (m_exclusiveMouseControl)
   {
     CGUIControl *child = GetControl(m_exclusiveMouseControl);
