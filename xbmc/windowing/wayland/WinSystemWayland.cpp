@@ -300,6 +300,8 @@ bool CWinSystemWayland::CreateNewWindow(const std::string& name,
     }
   };
 
+  m_surface.set_buffer_transform(2);
+
   m_extended_surface = m_surface_extension.get_extended_surface(m_surface);
 
   m_extended_surface.on_close() = [this]() {

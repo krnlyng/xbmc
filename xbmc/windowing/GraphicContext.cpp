@@ -669,7 +669,7 @@ const RESOLUTION_INFO CGraphicContext::GetResInfo() const
 // SailfishOS rotation hack
 static const float degrees_to_radians = 0.01745329252f;
 
-void CGraphicContext::GetGUIScaling(const RESOLUTION_INFO &res, float &scaleX, float &scaleY, TransformMatrix *matrix /* = NULL */)
+void CGraphicContext::GetGUIScaling(const RESOLUTION_INFO &res, float &scaleX, float &scaleY, float &scaleX1, float &scaleX2, TransformMatrix *matrix /* = NULL */)
 {
   if (m_Resolution != RES_INVALID)
   {
@@ -694,24 +694,25 @@ void CGraphicContext::GetGUIScaling(const RESOLUTION_INFO &res, float &scaleX, f
     fToPosY -= fToHeight * fZoom * 0.5f;
     fToHeight *= fZoom + 1.0f;
 
-    scaleX = fFromWidth / fToWidth;
-    scaleY = fFromHeight / fToHeight;
+    scaleX = 1.f;
+    scaleY = 1.f;
+    scaleX1 = 1.f;
+    scaleX2 = fToHeight  / fToHeight;
     if (matrix)
     {
-      TransformMatrix guiScaler = TransformMatrix::CreateScaler(fToWidth / fFromWidth, fToHeight / fFromHeight, fToHeight / fFromHeight);
+      TransformMatrix guiScaler = TransformMatrix::CreateScaler(fToHeight / fFromHeight, fToWidth / fFromWidth, fToHeight / fFromHeight);
       TransformMatrix guiOffset = TransformMatrix::CreateTranslation(fToPosX, fToPosY);
 
       // SailfishOS rotation hack
       TransformMatrix guiRotation;
       TransformMatrix guiRotationTrans;
       guiRotation.Reset();
+      guiRotationTrans.Reset();
 
       guiRotation.SetZRotation(270 * degrees_to_radians, 0, 0, fToHeight / fToWidth);
       guiRotationTrans.SetTranslation(0, fToHeight, 0);
 
-      *matrix = guiRotationTrans * guiOffset * guiRotation * guiScaler;
-
-      scaleX = scaleY = 1.f;
+      *matrix = guiRotationTrans * guiOffset * guiScaler * guiRotation;
     }
   }
   else
@@ -726,9 +727,10 @@ void CGraphicContext::SetScalingResolution(const RESOLUTION_INFO &res, bool need
 {
   CSingleLock lock(*this);
 
+  float dummy1, dummy2;
   m_windowResolution = res;
   if (needsScaling && m_Resolution != RES_INVALID)
-    GetGUIScaling(res, m_guiTransform.scaleX, m_guiTransform.scaleY, &m_guiTransform.matrix);
+    GetGUIScaling(res, m_guiTransform.scaleX, m_guiTransform.scaleY, dummy1, dummy2, &m_guiTransform.matrix);
   else
   {
     m_guiTransform.Reset();

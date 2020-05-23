@@ -48,8 +48,8 @@ void GUIFontManager::RescaleFontSizeAndAspect(float *size, float *aspect, const 
   // get the UI scaling constants so that we can scale our font sizes correctly
   // as fonts aren't scaled at render time (due to aliasing) we must scale
   // the size of the fonts before they are drawn to bitmaps
-  float scaleX, scaleY;
-  CServiceBroker::GetWinSystem()->GetGfxContext().GetGUIScaling(sourceRes, scaleX, scaleY);
+  float scaleX, scaleY, scaleX1, scaleY1;
+  CServiceBroker::GetWinSystem()->GetGfxContext().GetGUIScaling(sourceRes, scaleX, scaleY, scaleX1, scaleY1);
 
   if (preserveAspect)
   {
@@ -63,10 +63,10 @@ void GUIFontManager::RescaleFontSizeAndAspect(float *size, float *aspect, const 
     // adjust aspect ratio
     *aspect *= sourceRes.fPixelRatio;
 
-    *aspect *= scaleY / scaleX;
+    *aspect *= scaleY1 / scaleX1;
   }
 
-  *size /= scaleY;
+  *size /= scaleY1;
 }
 
 static bool CheckFont(std::string& strPath, const std::string& newPath,
