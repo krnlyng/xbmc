@@ -14,7 +14,7 @@
 #include "ServiceBroker.h"
 #include "utils/StringUtils.h"
 
-#include <audioresource.h>
+#include <audioresource/audioresource.h>
 #include <glib.h>
 
 static audioresource_t *l_audioresource = NULL;
